@@ -1,67 +1,67 @@
 {
   "roles": {
     "managers": [
-      "68c54987551a038619c4c4ab"
+      "6995335796787ce84bec0a43"
     ],
     "commanders": [
-      "693d9caa6a349c962ab0ba5f"
+      "6995335796787ce84bec0a43",
+      "697e69600d10f1efe1135268"
     ]
   },
-  "_id": "69831ed83a764aa9c0079a3e",
-  "user": "68c54987551a038619c4c4ab",
-  "region": "6813b7059403bc4170a5d76e",
-  "name": "Strelnieki",
+  "_id": "69ae81d6a583a3b5f9bd29de",
+  "user": "6995335796787ce84bec0a43",
+  "region": "6813b7089403bc4170a5d8f1",
+  "name": "Libertalia",
   "members": [
-    "697e35abfcf21af68c88a4b2",
-    "697f534154da98c1fc76c79d",
-    "69831346019f541a80382089",
-    "6967d61255cb9663e7272202",
-    "693d9caa6a349c962ab0ba5f",
-    "698883ff2c44fa30e457a78d",
-    "698c0ef6dd9e998685eb9270"
+    "6995335796787ce84bec0a43",
+    "697e69600d10f1efe1135268",
+    "69a20eedfdc2d7ad302f643c",
+    "69ab46d344ea55526181848e",
+    "69a93c396bf1089acdb8cf20",
+    "69ae6389965d2ea7612656ca",
+    "69ac1298e18dda52f4f6c4f3",
+    "69ab411000d6543b1e08b8ec",
+    "698c654ad3654162952e5942",
+    "699729804f89f5df12b57c8f",
+    "69abc843a68a26c63894a2a2",
+    "699704fca0369b78bae9eb29",
+    "69908bb68b9151ad2bcab6ea",
+    "6997c7423ae3d28270fc1070",
+    "69a0309ebb9514d251964ee8"
   ],
-  "createdAt": "2026-02-04T10:26:32.608Z",
-  "updatedAt": "2026-02-11T14:00:11.780Z",
+  "createdAt": "2026-03-09T08:16:22.716Z",
+  "updatedAt": "2026-03-11T08:00:15.717Z",
   "__v": 0,
   "activeUpgradeLevels": {
+    "headquarters": 1,
     "dormitories": 3
   },
-  "avatarUrl": "https://media.warera.io/avatars/mu/mu-69831ed83a764aa9c0079a3e-1770223432450-zfj5nr9t.png",
+  "avatarUrl": "https://media.warera.io/avatars/mu/mu-69ae81d6a583a3b5f9bd29de-1773044262803-fq352qbt.jpg",
   "rankings": {
     "muWeeklyDamages": {
-      "value": 98988,
-      "rank": 213,
+      "value": 302160,
+      "rank": 250,
       "tier": "bronze"
     },
     "muBounty": {
-      "value": 12.572419,
-      "rank": 266,
+      "value": 17.558030000000002,
+      "rank": 376,
       "tier": "bronze"
     },
     "muDamages": {
-      "value": 232377,
-      "rank": 261,
+      "value": 302160,
+      "rank": 371,
       "tier": "bronze"
     },
     "muTerrain": {
-      "value": 63,
-      "rank": 269,
+      "value": 72,
+      "rank": 374,
       "tier": "bronze"
     },
     "muWealth": {
-      "value": 383.70599999999996,
-      "rank": 96,
-      "tier": "gold"
+      "value": 263.4440000000001,
+      "rank": 183,
+      "tier": "silver"
     }
-  },
-  "investedMoneyByUsers": {
-    "68c54987551a038619c4c4ab": 1045,
-    "697e35abfcf21af68c88a4b2": 8,
-    "69831346019f541a80382089": 14,
-    "6980dea6fe49beb7241a6d5f": 4,
-    "697f534154da98c1fc76c79d": 110,
-    "6967d61255cb9663e7272202": 32,
-    "693d9caa6a349c962ab0ba5f": 10,
-    "698c0ef6dd9e998685eb9270": 10
   }
 }

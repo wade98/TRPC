@@ -31,7 +31,8 @@
 		"prepublishOnly": "npm run build",
 		"openapi": "openapi-typescript https://api2.warera.io/openapi.json -o src/api/warera-openapi.d.ts",
 		"test": "tsx -r dotenv/config tests/test-api.ts",
-		"allEndpoints": "tsx -r dotenv/config tests/AllEndpoints.ts"
+		"allEndpoints": "tsx -r dotenv/config tests/AllEndpoints.ts",
+		"allEndpoints:fresh": "tsx -r dotenv/config tests/AllEndpoints.ts --refresh-outputs"
 	},
 	"dependencies": {
 		"@trpc/client": "^10.45.2"

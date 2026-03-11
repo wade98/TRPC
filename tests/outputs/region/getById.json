@@ -19,10 +19,10 @@
   ],
   "isCapital": false,
   "isLinkedToCapital": true,
-  "name": "Tver and Smolensk",
+  "name": "Tver & Smolensk",
   "mainCity": "Tver",
-  "development": 3.66,
-  "baseDevelopment": 3.66,
+  "development": 3.91,
+  "baseDevelopment": 3.91,
   "countryCode": "ru",
   "position": [
     35.9176,
@@ -33,8 +33,13 @@
   "upgradesV2": {
     "upgrades": {}
   },
-  "__v": 1,
-  "resistance": 25,
-  "activeUpgradeLevels": {},
-  "strategicResource": "gold"
+  "__v": 3,
+  "resistance": 208.5,
+  "activeUpgradeLevels": {
+    "bunker": 3
+  },
+  "resistanceMax": 391,
+  "lastResistanceContributionAt": "2026-03-10T05:31:22.182Z",
+  "lastRevoltEndedAt": "2026-03-10T23:39:02.813Z",
+  "lastBattleEndedAt": "2026-03-10T23:39:02.814Z"
 }

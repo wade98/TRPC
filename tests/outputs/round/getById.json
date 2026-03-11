@@ -1,250 +1,870 @@
 {
   "attacker": {
-    "country": "6813b6d446e731854c7ac7e8",
-    "damages": 147588,
-    "points": 142,
+    "country": "6813b6d446e731854c7ac7eb",
+    "damages": 1426806,
+    "points": 76,
     "lastHits": [
       {
-        "_id": "698c8f15549b8398fe131e3d",
-        "user": "697a8c0d8dda5d5776bfc00e",
-        "damages": 1267,
-        "mu": "692b2e57aa306c063bafb438",
-        "isCriticalHit": true,
-        "isMissed": false,
-        "hitAt": "2026-02-11T14:15:49.418Z",
-        "weapon": {
-          "_id": "698b8b2f855e1ab9d61387c7",
-          "code": "rifle",
-          "skills": {
-            "attack": 80,
-            "criticalChance": 12
-          },
-          "state": 45,
-          "maxState": 100,
-          "quantity": 1,
-          "lastAcquisitionAt": "2026-02-07T05:33:10.146Z"
-        },
-        "ammo": "lightAmmo"
-      },
-      {
-        "_id": "698c8ef6067d5663f16048bf",
-        "user": "697a8c0d8dda5d5776bfc00e",
-        "damages": 1275,
-        "mu": "692b2e57aa306c063bafb438",
-        "isCriticalHit": true,
-        "isMissed": false,
-        "hitAt": "2026-02-11T14:15:18.735Z",
-        "weapon": {
-          "_id": "698b8b2f855e1ab9d61387c7",
-          "code": "rifle",
-          "skills": {
-            "attack": 80,
-            "criticalChance": 12
-          },
-          "state": 46,
-          "maxState": 100,
-          "quantity": 1,
-          "lastAcquisitionAt": "2026-02-07T05:33:10.146Z"
-        },
-        "ammo": "lightAmmo"
-      },
-      {
-        "_id": "698c8ef6067d5663f16047e8",
-        "user": "697a8c0d8dda5d5776bfc00e",
-        "damages": 462,
-        "mu": "692b2e57aa306c063bafb438",
+        "_id": "69b12929e86aeacd8c0f887a",
+        "user": "68f889a75a43363f0ea08069",
+        "damages": 1674,
+        "mu": "689f69064e095b8b9f1b885a",
         "isCriticalHit": false,
         "isMissed": false,
-        "hitAt": "2026-02-11T14:15:18.117Z",
+        "hitAt": "2026-03-11T08:34:49.265Z",
         "weapon": {
-          "_id": "698b8b2f855e1ab9d61387c7",
-          "code": "rifle",
+          "_id": "69b128da4b0d180f672dc9b3",
+          "code": "tank",
           "skills": {
-            "attack": 80,
-            "criticalChance": 12
+            "attack": 150,
+            "criticalChance": 30
           },
-          "state": 47,
+          "state": 72,
           "maxState": 100,
           "quantity": 1,
-          "lastAcquisitionAt": "2026-02-07T05:33:10.146Z"
+          "lastAcquisitionAt": "2026-03-11T00:27:05.950Z"
         },
-        "ammo": "lightAmmo"
+        "equipments": [
+          {
+            "_id": "69adbac4142f25fd63e6e027",
+            "type": "equipment",
+            "code": "helmet3",
+            "skills": {
+              "criticalDamages": 28
+            },
+            "state": 36,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-08T18:07:00.998Z"
+          },
+          {
+            "_id": "69a2e3d27542893906c740c5",
+            "type": "equipment",
+            "code": "chest4",
+            "skills": {
+              "armor": 18
+            },
+            "state": 4,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-17T21:20:03.327Z"
+          },
+          {
+            "_id": "69a2e3cf4d29cddbbf447268",
+            "type": "equipment",
+            "code": "pants4",
+            "skills": {
+              "armor": 18
+            },
+            "state": 19,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-15T18:02:16.640Z"
+          },
+          {
+            "_id": "69b126ac36fe96b989696657",
+            "type": "equipment",
+            "code": "boots4",
+            "skills": {
+              "dodge": 20
+            },
+            "state": 95,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-11T06:40:13.783Z"
+          },
+          {
+            "_id": "69b128e7a08441c71ec80137",
+            "type": "equipment",
+            "code": "gloves4",
+            "skills": {
+              "precision": 16
+            },
+            "state": 86,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-14T04:50:18.928Z"
+          }
+        ],
+        "ammo": "ammo"
       },
       {
-        "_id": "698c8ef5d3654162955a068c",
-        "user": "697a8c0d8dda5d5776bfc00e",
-        "damages": 225,
-        "mu": "692b2e57aa306c063bafb438",
+        "_id": "69b129232895f070b7baab81",
+        "user": "69a2cbe17542893906a322af",
+        "damages": 103,
+        "mu": null,
         "isCriticalHit": false,
         "isMissed": true,
-        "hitAt": "2026-02-11T14:15:17.149Z",
+        "hitAt": "2026-03-11T08:34:43.724Z",
         "weapon": {
-          "_id": "698b8b2f855e1ab9d61387c7",
-          "code": "rifle",
+          "_id": "69aa1a55d576d780235d4365",
+          "code": "knife",
           "skills": {
-            "attack": 80,
-            "criticalChance": 12
+            "attack": 38,
+            "criticalChance": 5
           },
-          "state": 48,
+          "state": 21,
           "maxState": 100,
           "quantity": 1,
-          "lastAcquisitionAt": "2026-02-07T05:33:10.146Z"
+          "lastAcquisitionAt": "2026-03-06T00:05:41.524Z"
         },
-        "ammo": "lightAmmo"
+        "equipments": [
+          {
+            "_id": "69abd54a4442e986dfc59dfd",
+            "type": "equipment",
+            "code": "helmet1",
+            "skills": {
+              "criticalDamages": 1
+            },
+            "state": 48,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-07T07:35:38.119Z"
+          },
+          {
+            "_id": "69a5271ec43cc51f305fdf03",
+            "type": "equipment",
+            "code": "chest1",
+            "skills": {
+              "armor": 2
+            },
+            "state": 48,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-02T05:58:54.276Z"
+          },
+          {
+            "_id": "69a7c43983c15481ff59d46b",
+            "type": "equipment",
+            "code": "pants1",
+            "skills": {
+              "armor": 5
+            },
+            "state": 48,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-04T05:33:45.736Z"
+          },
+          {
+            "_id": "69aeb6b2445e36e4050b00a6",
+            "type": "equipment",
+            "code": "boots1",
+            "skills": {
+              "dodge": 3
+            },
+            "state": 76,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-09T12:01:54.242Z"
+          },
+          {
+            "_id": "69a322a54d29cddbbfc59868",
+            "type": "equipment",
+            "code": "gloves1",
+            "skills": {
+              "precision": 4
+            },
+            "state": 48,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-28T17:15:17.495Z"
+          }
+        ],
+        "ammo": null
       },
       {
-        "_id": "698c8ef4afde15e082e57456",
-        "user": "697a8c0d8dda5d5776bfc00e",
-        "damages": 436,
-        "mu": "692b2e57aa306c063bafb438",
+        "_id": "69b129236157435c4f6e23c2",
+        "user": "69a2cbe17542893906a322af",
+        "damages": 225,
+        "mu": null,
         "isCriticalHit": false,
         "isMissed": false,
-        "hitAt": "2026-02-11T14:15:16.290Z",
+        "hitAt": "2026-03-11T08:34:43.467Z",
         "weapon": {
-          "_id": "698b8b2f855e1ab9d61387c7",
-          "code": "rifle",
+          "_id": "69aa1a55d576d780235d4365",
+          "code": "knife",
           "skills": {
-            "attack": 80,
-            "criticalChance": 12
+            "attack": 38,
+            "criticalChance": 5
           },
-          "state": 49,
+          "state": 22,
           "maxState": 100,
           "quantity": 1,
-          "lastAcquisitionAt": "2026-02-07T05:33:10.146Z"
+          "lastAcquisitionAt": "2026-03-06T00:05:41.524Z"
         },
-        "ammo": "lightAmmo"
+        "equipments": [
+          {
+            "_id": "69abd54a4442e986dfc59dfd",
+            "type": "equipment",
+            "code": "helmet1",
+            "skills": {
+              "criticalDamages": 1
+            },
+            "state": 49,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-07T07:35:38.119Z"
+          },
+          {
+            "_id": "69a5271ec43cc51f305fdf03",
+            "type": "equipment",
+            "code": "chest1",
+            "skills": {
+              "armor": 2
+            },
+            "state": 49,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-02T05:58:54.276Z"
+          },
+          {
+            "_id": "69a7c43983c15481ff59d46b",
+            "type": "equipment",
+            "code": "pants1",
+            "skills": {
+              "armor": 5
+            },
+            "state": 49,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-04T05:33:45.736Z"
+          },
+          {
+            "_id": "69aeb6b2445e36e4050b00a6",
+            "type": "equipment",
+            "code": "boots1",
+            "skills": {
+              "dodge": 3
+            },
+            "state": 77,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-09T12:01:54.242Z"
+          },
+          {
+            "_id": "69a322a54d29cddbbfc59868",
+            "type": "equipment",
+            "code": "gloves1",
+            "skills": {
+              "precision": 4
+            },
+            "state": 49,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-28T17:15:17.495Z"
+          }
+        ],
+        "ammo": null
+      },
+      {
+        "_id": "69b12920b5486e4fd958e582",
+        "user": "68f889a75a43363f0ea08069",
+        "damages": 4802,
+        "mu": "689f69064e095b8b9f1b885a",
+        "isCriticalHit": true,
+        "isMissed": false,
+        "hitAt": "2026-03-11T08:34:40.997Z",
+        "weapon": {
+          "_id": "69b128da4b0d180f672dc9b3",
+          "code": "tank",
+          "skills": {
+            "attack": 150,
+            "criticalChance": 30
+          },
+          "state": 73,
+          "maxState": 100,
+          "quantity": 1,
+          "lastAcquisitionAt": "2026-03-11T00:27:05.950Z"
+        },
+        "equipments": [
+          {
+            "_id": "69adbac4142f25fd63e6e027",
+            "type": "equipment",
+            "code": "helmet3",
+            "skills": {
+              "criticalDamages": 28
+            },
+            "state": 37,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-08T18:07:00.998Z"
+          },
+          {
+            "_id": "69a2e3d27542893906c740c5",
+            "type": "equipment",
+            "code": "chest4",
+            "skills": {
+              "armor": 18
+            },
+            "state": 5,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-17T21:20:03.327Z"
+          },
+          {
+            "_id": "69a2e3cf4d29cddbbf447268",
+            "type": "equipment",
+            "code": "pants4",
+            "skills": {
+              "armor": 18
+            },
+            "state": 20,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-15T18:02:16.640Z"
+          },
+          {
+            "_id": "69b126ac36fe96b989696657",
+            "type": "equipment",
+            "code": "boots4",
+            "skills": {
+              "dodge": 20
+            },
+            "state": 96,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-11T06:40:13.783Z"
+          },
+          {
+            "_id": "69b128e7a08441c71ec80137",
+            "type": "equipment",
+            "code": "gloves4",
+            "skills": {
+              "precision": 16
+            },
+            "state": 87,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-14T04:50:18.928Z"
+          }
+        ],
+        "ammo": "ammo"
+      },
+      {
+        "_id": "69b12920e5230b35c26cc6f0",
+        "user": "68f889a75a43363f0ea08069",
+        "damages": 1566,
+        "mu": "689f69064e095b8b9f1b885a",
+        "isCriticalHit": false,
+        "isMissed": false,
+        "hitAt": "2026-03-11T08:34:40.521Z",
+        "weapon": {
+          "_id": "69b128da4b0d180f672dc9b3",
+          "code": "tank",
+          "skills": {
+            "attack": 150,
+            "criticalChance": 30
+          },
+          "state": 74,
+          "maxState": 100,
+          "quantity": 1,
+          "lastAcquisitionAt": "2026-03-11T00:27:05.950Z"
+        },
+        "equipments": [
+          {
+            "_id": "69adbac4142f25fd63e6e027",
+            "type": "equipment",
+            "code": "helmet3",
+            "skills": {
+              "criticalDamages": 28
+            },
+            "state": 38,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-08T18:07:00.998Z"
+          },
+          {
+            "_id": "69a2e3d27542893906c740c5",
+            "type": "equipment",
+            "code": "chest4",
+            "skills": {
+              "armor": 18
+            },
+            "state": 6,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-17T21:20:03.327Z"
+          },
+          {
+            "_id": "69a2e3cf4d29cddbbf447268",
+            "type": "equipment",
+            "code": "pants4",
+            "skills": {
+              "armor": 18
+            },
+            "state": 21,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-15T18:02:16.640Z"
+          },
+          {
+            "_id": "69b126ac36fe96b989696657",
+            "type": "equipment",
+            "code": "boots4",
+            "skills": {
+              "dodge": 20
+            },
+            "state": 97,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-11T06:40:13.783Z"
+          },
+          {
+            "_id": "69b128e7a08441c71ec80137",
+            "type": "equipment",
+            "code": "gloves4",
+            "skills": {
+              "precision": 16
+            },
+            "state": 88,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-14T04:50:18.928Z"
+          }
+        ],
+        "ammo": "ammo"
       }
     ],
-    "hitCount": 321
+    "hitCount": 2454
   },
   "defender": {
-    "country": "6813b6d446e731854c7ac7eb",
-    "damages": 120959,
+    "country": "6813b6d446e731854c7ac7ba",
+    "damages": 1120010,
     "points": 0,
     "lastHits": [
       {
-        "_id": "698c902468c173a3408b437b",
-        "user": "68f29043c9df13b2fe7047a5",
-        "damages": 195,
-        "mu": "6962988acde9ff82a4dd49be",
+        "_id": "69b1292a2895f070b7baee13",
+        "user": "696ffc9db74dc09afb67d289",
+        "damages": 1532,
+        "mu": "699ec695b19b2c5fe3f03b12",
+        "isCriticalHit": true,
+        "isMissed": false,
+        "hitAt": "2026-03-11T08:34:50.334Z",
+        "weapon": {
+          "_id": "69b1289aa08441c71ec79b64",
+          "code": "sniper",
+          "skills": {
+            "attack": 119,
+            "criticalChance": 17
+          },
+          "state": 100,
+          "maxState": 100,
+          "quantity": 1,
+          "lastAcquisitionAt": "2026-03-11T08:20:17.432Z"
+        },
+        "equipments": [
+          {
+            "_id": "69b09bfda403356a8ae2027d",
+            "type": "equipment",
+            "code": "helmet4",
+            "skills": {
+              "criticalDamages": 33
+            },
+            "state": 98,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-10T11:47:14.567Z"
+          },
+          {
+            "_id": "69b09a126dcb0df73bdef59b",
+            "type": "equipment",
+            "code": "chest3",
+            "skills": {
+              "armor": 12
+            },
+            "state": 94,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-10T19:50:44.902Z"
+          },
+          {
+            "_id": "69b09a2acbf2b5c108b7ce1d",
+            "type": "equipment",
+            "code": "pants3",
+            "skills": {
+              "armor": 12
+            },
+            "state": 94,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-10T19:50:19.328Z"
+          },
+          {
+            "_id": "69aef4d2e86aeacd8ce27a2e",
+            "type": "equipment",
+            "code": "boots3",
+            "skills": {
+              "dodge": 13
+            },
+            "state": 94,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-09T16:26:58.017Z"
+          },
+          {
+            "_id": "69b09a6819f98f6ceb825546",
+            "type": "equipment",
+            "code": "gloves3",
+            "skills": {
+              "precision": 13
+            },
+            "state": 94,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-10T01:35:25.002Z"
+          }
+        ],
+        "ammo": "ammo"
+      },
+      {
+        "_id": "69b128df36fe96b9896c879c",
+        "user": "697aaceb6222a3aecbeabd21",
+        "damages": 1729,
+        "mu": "68feddc87d2146df6b380c17",
+        "isCriticalHit": true,
+        "isMissed": false,
+        "hitAt": "2026-03-11T08:33:35.281Z",
+        "weapon": {
+          "_id": "698b1cab7f0080bed28a8afb",
+          "code": "gun",
+          "skills": {
+            "attack": 57,
+            "criticalChance": 9
+          },
+          "state": 95,
+          "maxState": 100,
+          "quantity": 1,
+          "lastAcquisitionAt": "2026-02-10T11:55:23.496Z"
+        },
+        "equipments": [
+          {
+            "_id": "697fc0617df586d493017b15",
+            "type": "equipment",
+            "code": "helmet3",
+            "skills": {
+              "criticalDamages": 22
+            },
+            "state": 4,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-01T21:06:41.978Z"
+          },
+          {
+            "_id": "69ac1ed6e999177790b48010",
+            "type": "equipment",
+            "code": "chest2",
+            "skills": {
+              "armor": 9
+            },
+            "state": 77,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-07T12:49:26.114Z"
+          },
+          {
+            "_id": "69a70e924310608e31ebb2eb",
+            "type": "equipment",
+            "code": "pants2",
+            "skills": {
+              "armor": 10
+            },
+            "state": 76,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-03T16:38:42.311Z"
+          },
+          {
+            "_id": "69aeaffe6dcb0df73bbe553b",
+            "type": "equipment",
+            "code": "boots2",
+            "skills": {
+              "dodge": 8
+            },
+            "state": 91,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-09T11:33:18.964Z"
+          },
+          {
+            "_id": "69ad3704269bf5adbe8e6f68",
+            "type": "equipment",
+            "code": "gloves2",
+            "skills": {
+              "precision": 10
+            },
+            "state": 59,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-08T08:44:52.579Z"
+          }
+        ],
+        "ammo": "lightAmmo"
+      },
+      {
+        "_id": "69b128dd4b0d180f672ddb5f",
+        "user": "697a3a557c5c0bd53abfb5cd",
+        "damages": 264,
+        "mu": "69722a45cb5a8a5462d0bdae",
         "isCriticalHit": false,
         "isMissed": true,
-        "hitAt": "2026-02-11T14:20:20.343Z",
+        "hitAt": "2026-03-11T08:33:33.266Z",
         "weapon": {
-          "_id": "696644f6d83cd4e381752ad4",
+          "_id": "6998bd8b9e18cdb9476843b3",
           "code": "rifle",
           "skills": {
-            "attack": 86,
-            "criticalChance": 13
+            "attack": 75,
+            "criticalChance": 12
           },
-          "state": 27,
+          "state": 53,
           "maxState": 100,
           "quantity": 1,
-          "lastAcquisitionAt": "2026-01-13T13:13:26.392Z"
+          "lastAcquisitionAt": "2026-02-20T20:01:15.943Z"
         },
-        "ammo": "lightAmmo"
-      },
-      {
-        "_id": "698c901add9e9986855a676b",
-        "user": "68f29043c9df13b2fe7047a5",
-        "damages": 1173,
-        "mu": "6962988acde9ff82a4dd49be",
-        "isCriticalHit": true,
-        "isMissed": false,
-        "hitAt": "2026-02-11T14:20:10.821Z",
-        "weapon": {
-          "_id": "696644f6d83cd4e381752ad4",
-          "code": "rifle",
-          "skills": {
-            "attack": 86,
-            "criticalChance": 13
+        "equipments": [
+          {
+            "_id": "69ae8c6a6dcb0df73b4c73dd",
+            "type": "equipment",
+            "code": "helmet3",
+            "skills": {
+              "criticalDamages": 23
+            },
+            "state": 38,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-09T09:01:30.909Z"
           },
-          "state": 28,
-          "maxState": 100,
-          "quantity": 1,
-          "lastAcquisitionAt": "2026-01-13T13:13:26.392Z"
-        },
-        "ammo": "lightAmmo"
+          {
+            "_id": "69ae8c96965d2ea76183d13b",
+            "type": "equipment",
+            "code": "chest3",
+            "skills": {
+              "armor": 13
+            },
+            "state": 38,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-09T09:02:14.527Z"
+          },
+          {
+            "_id": "698a2eddf2abfbf985013a0b",
+            "type": "equipment",
+            "code": "pants3",
+            "skills": {
+              "armor": 12
+            },
+            "state": 38,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-09T19:00:45.174Z"
+          },
+          {
+            "_id": "69aebb73e86aeacd8c9fb3af",
+            "type": "equipment",
+            "code": "boots3",
+            "skills": {
+              "dodge": 14
+            },
+            "state": 38,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-09T12:22:11.773Z"
+          },
+          {
+            "_id": "6995edb6e855fe967a5bb181",
+            "type": "equipment",
+            "code": "gloves3",
+            "skills": {
+              "precision": 13
+            },
+            "state": 38,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-18T16:49:58.014Z"
+          }
+        ],
+        "ammo": "ammo"
       },
       {
-        "_id": "698c9018d35f9742208ace33",
-        "user": "68f29043c9df13b2fe7047a5",
-        "damages": 354,
-        "mu": "6962988acde9ff82a4dd49be",
+        "_id": "69b128dd4b0d180f672dda83",
+        "user": "697a3a557c5c0bd53abfb5cd",
+        "damages": 230,
+        "mu": "69722a45cb5a8a5462d0bdae",
         "isCriticalHit": false,
-        "isMissed": false,
-        "hitAt": "2026-02-11T14:20:08.802Z",
+        "isMissed": true,
+        "hitAt": "2026-03-11T08:33:33.091Z",
         "weapon": {
-          "_id": "696644f6d83cd4e381752ad4",
+          "_id": "6998bd8b9e18cdb9476843b3",
           "code": "rifle",
           "skills": {
-            "attack": 86,
-            "criticalChance": 13
+            "attack": 75,
+            "criticalChance": 12
           },
-          "state": 29,
+          "state": 54,
           "maxState": 100,
           "quantity": 1,
-          "lastAcquisitionAt": "2026-01-13T13:13:26.392Z"
+          "lastAcquisitionAt": "2026-02-20T20:01:15.943Z"
         },
-        "ammo": "lightAmmo"
+        "equipments": [
+          {
+            "_id": "69ae8c6a6dcb0df73b4c73dd",
+            "type": "equipment",
+            "code": "helmet3",
+            "skills": {
+              "criticalDamages": 23
+            },
+            "state": 39,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-09T09:01:30.909Z"
+          },
+          {
+            "_id": "69ae8c96965d2ea76183d13b",
+            "type": "equipment",
+            "code": "chest3",
+            "skills": {
+              "armor": 13
+            },
+            "state": 39,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-09T09:02:14.527Z"
+          },
+          {
+            "_id": "698a2eddf2abfbf985013a0b",
+            "type": "equipment",
+            "code": "pants3",
+            "skills": {
+              "armor": 12
+            },
+            "state": 39,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-09T19:00:45.174Z"
+          },
+          {
+            "_id": "69aebb73e86aeacd8c9fb3af",
+            "type": "equipment",
+            "code": "boots3",
+            "skills": {
+              "dodge": 14
+            },
+            "state": 39,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-09T12:22:11.773Z"
+          },
+          {
+            "_id": "6995edb6e855fe967a5bb181",
+            "type": "equipment",
+            "code": "gloves3",
+            "skills": {
+              "precision": 13
+            },
+            "state": 39,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-18T16:49:58.014Z"
+          }
+        ],
+        "ammo": "ammo"
       },
       {
-        "_id": "698c901768c173a3408b1fff",
-        "user": "68f29043c9df13b2fe7047a5",
-        "damages": 388,
-        "mu": "6962988acde9ff82a4dd49be",
+        "_id": "69b128dc445e36e405cca04d",
+        "user": "697a3a557c5c0bd53abfb5cd",
+        "damages": 270,
+        "mu": "69722a45cb5a8a5462d0bdae",
         "isCriticalHit": false,
-        "isMissed": false,
-        "hitAt": "2026-02-11T14:20:07.228Z",
+        "isMissed": true,
+        "hitAt": "2026-03-11T08:33:32.900Z",
         "weapon": {
-          "_id": "696644f6d83cd4e381752ad4",
+          "_id": "6998bd8b9e18cdb9476843b3",
           "code": "rifle",
           "skills": {
-            "attack": 86,
-            "criticalChance": 13
+            "attack": 75,
+            "criticalChance": 12
           },
-          "state": 30,
+          "state": 55,
           "maxState": 100,
           "quantity": 1,
-          "lastAcquisitionAt": "2026-01-13T13:13:26.392Z"
+          "lastAcquisitionAt": "2026-02-20T20:01:15.943Z"
         },
-        "ammo": "lightAmmo"
-      },
-      {
-        "_id": "698c9015dd9e9986855a4526",
-        "user": "68f29043c9df13b2fe7047a5",
-        "damages": 1023,
-        "mu": "6962988acde9ff82a4dd49be",
-        "isCriticalHit": true,
-        "isMissed": false,
-        "hitAt": "2026-02-11T14:20:05.207Z",
-        "weapon": {
-          "_id": "696644f6d83cd4e381752ad4",
-          "code": "rifle",
-          "skills": {
-            "attack": 86,
-            "criticalChance": 13
+        "equipments": [
+          {
+            "_id": "69ae8c6a6dcb0df73b4c73dd",
+            "type": "equipment",
+            "code": "helmet3",
+            "skills": {
+              "criticalDamages": 23
+            },
+            "state": 40,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-09T09:01:30.909Z"
           },
-          "state": 31,
-          "maxState": 100,
-          "quantity": 1,
-          "lastAcquisitionAt": "2026-01-13T13:13:26.392Z"
-        },
-        "ammo": "lightAmmo"
+          {
+            "_id": "69ae8c96965d2ea76183d13b",
+            "type": "equipment",
+            "code": "chest3",
+            "skills": {
+              "armor": 13
+            },
+            "state": 40,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-09T09:02:14.527Z"
+          },
+          {
+            "_id": "698a2eddf2abfbf985013a0b",
+            "type": "equipment",
+            "code": "pants3",
+            "skills": {
+              "armor": 12
+            },
+            "state": 40,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-09T19:00:45.174Z"
+          },
+          {
+            "_id": "69aebb73e86aeacd8c9fb3af",
+            "type": "equipment",
+            "code": "boots3",
+            "skills": {
+              "dodge": 14
+            },
+            "state": 40,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-03-09T12:22:11.773Z"
+          },
+          {
+            "_id": "6995edb6e855fe967a5bb181",
+            "type": "equipment",
+            "code": "gloves3",
+            "skills": {
+              "precision": 13
+            },
+            "state": 40,
+            "maxState": 100,
+            "quantity": 1,
+            "lastAcquisitionAt": "2026-02-18T16:49:58.014Z"
+          }
+        ],
+        "ammo": "ammo"
       }
     ],
-    "hitCount": 269
+    "hitCount": 1840
   },
   "live": {
-    "ticksCount": 121,
-    "actualTickPoints": 2,
-    "nextTickAt": "2026-02-11T14:21:00.266Z"
+    "ticksCount": 76,
+    "actualTickPoints": 1,
+    "nextTickAt": "2026-03-11T08:36:00.511Z"
   },
-  "_id": "698c570b68c173a34057f75f",
-  "battle": "698c570b68c173a34057f75d",
-  "number": 1,
+  "_id": "69b1051ec5feee11df765fbe",
+  "battle": "69b0aeb7965d2ea761441ba3",
+  "number": 2,
   "isActive": true,
-  "createdAt": "2026-02-11T10:16:43.296Z",
-  "updatedAt": "2026-02-11T14:20:20.343Z",
+  "createdAt": "2026-03-11T06:01:02.232Z",
+  "updatedAt": "2026-03-11T08:34:50.334Z",
   "__v": 0
 }

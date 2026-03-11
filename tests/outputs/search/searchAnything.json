@@ -1,11 +1,14 @@
 {
   "userIds": [
-    "697a67469a6b47ffc6b63467",
-    "69811d47443461f213331c68",
-    "69891134c5c82ef9ae7c05a1"
+    "69b020ae4a0b814a34aef4e2",
+    "69ad36186b95cf4005576924",
+    "69811d47443461f213331c68"
   ],
-  "muIds": [],
+  "muIds": [
+    "69a9544fff763221e163af0f"
+  ],
   "countryIds": [],
   "regionIds": [],
+  "partyIds": [],
   "hasData": true
 }
