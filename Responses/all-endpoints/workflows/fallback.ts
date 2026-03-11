@@ -95,7 +95,7 @@ export async function runFallbackWorkflow(
       case "ranking.getRanking":
         return { rankingType: "countryDamages" };
       case "search.searchAnything":
-        return { searchText: process.env.WARERA_SEARCH_TEXT ?? "war" };
+        return { searchText: process.env.WARERA_SEARCH_TEXT ?? "a" };
       case "gameConfig.getDates":
       case "gameConfig.getGameConfig":
         return {};

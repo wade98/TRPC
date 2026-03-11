@@ -1,10 +1,10 @@
 {
   "stats": {
-    "likes": 14,
-    "dislikes": 2,
+    "likes": 16,
+    "dislikes": 4,
     "score": 12,
-    "views": 105,
-    "comments": 2,
+    "views": 122,
+    "comments": 4,
     "subs": 0,
     "tips": 2,
     "gemTips": 1
@@ -18,7 +18,7 @@
   "isPublished": true,
   "isDeleted": false,
   "createdAt": "2026-03-11T11:46:40.997Z",
-  "updatedAt": "2026-03-11T13:03:11.448Z",
+  "updatedAt": "2026-03-11T15:59:02.135Z",
   "__v": 0,
   "publishedAt": "2026-03-11T11:47:00.431Z"
 }

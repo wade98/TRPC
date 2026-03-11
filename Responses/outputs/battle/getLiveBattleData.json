@@ -1,25 +1,25 @@
 {
   "battle": {
-    "isActive": true,
-    "attackerCountryOrders": [
-      "6813b6d446e731854c7ac7a0"
-    ],
+    "isActive": false,
+    "attackerCountryOrders": [],
     "defenderCountryOrders": [],
     "roundIds": [
-      "69b134e24b0d180f6743b0f7"
+      "687b90a72c7bf318288baafd",
+      "687be6fc7b45e96aa02c801e"
     ],
-    "roundHistory": [],
-    "attackerMoneyPer1kDamages": 0.1,
-    "attackerMoneyPool": 0
+    "roundHistory": [
+      "attacker",
+      "attacker"
+    ]
   },
   "round": {
-    "roundId": "69b134e24b0d180f6743b0f7",
-    "attackerDamages": 119295,
-    "defenderDamages": 10600,
-    "isActive": true,
-    "actualTickPoints": 2,
-    "attackerPoints": 120,
-    "nextTickAt": "2026-03-11T13:07:00.493Z",
-    "defenderPoints": 0
+    "roundId": "687be6fc7b45e96aa02c801e",
+    "attackerDamages": 4751,
+    "defenderDamages": 2988,
+    "isActive": false,
+    "actualTickPoints": 4,
+    "attackerPoints": 302,
+    "nextTickAt": "2025-07-20T00:59:00.118Z",
+    "defenderPoints": 12
   }
 }

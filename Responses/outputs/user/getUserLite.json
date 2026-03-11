@@ -1,6 +1,6 @@
 {
   "dates": {
-    "lastConnectionAt": "2026-03-11T13:01:24.969Z",
+    "lastConnectionAt": "2026-03-11T15:14:54.636Z",
     "lastNotificationsCheckAt": "2025-08-23T08:25:27.409Z",
     "lastCountryMessageCheckAt": "2025-08-23T08:25:27.409Z",
     "lastGlobalMessageCheckAt": "2025-08-23T08:25:27.409Z",
@@ -95,7 +95,7 @@
   "skills": {
     "energy": {
       "level": 2,
-      "currentBarValue": 10,
+      "currentBarValue": 25,
       "value": 50,
       "weapon": null,
       "equipment": null,
@@ -106,7 +106,7 @@
     },
     "health": {
       "level": 4,
-      "currentBarValue": 39.399999999999984,
+      "currentBarValue": 27.19999999999999,
       "value": 90,
       "weapon": null,
       "equipment": null,
@@ -133,10 +133,10 @@
       "debuffsPercent": 0,
       "militaryRankPercent": 22.5,
       "value": 200,
-      "weapon": 156,
+      "weapon": 103,
       "equipment": null,
       "limited": null,
-      "total": 523,
+      "total": 445,
       "totalAfterSoftCap": null
     },
     "companies": {
@@ -150,7 +150,7 @@
     },
     "entrepreneurship": {
       "level": 0,
-      "currentBarValue": 3,
+      "currentBarValue": 12,
       "value": 30,
       "weapon": null,
       "equipment": null,
@@ -173,10 +173,10 @@
     "criticalChance": {
       "level": 5,
       "value": 35,
-      "weapon": 28,
+      "weapon": 20,
       "equipment": null,
       "limited": null,
-      "total": 63,
+      "total": 55,
       "totalAfterSoftCap": null
     },
     "criticalDamages": {
@@ -201,9 +201,9 @@
       "level": 4,
       "value": 70,
       "weapon": null,
-      "equipment": 16,
+      "equipment": null,
       "limited": null,
-      "total": 86,
+      "total": 70,
       "totalAfterSoftCap": null
     },
     "dodge": {
@@ -236,22 +236,22 @@
   },
   "createdAt": "2025-08-23T08:25:27.411Z",
   "stats": {
-    "damagesCount": 12452970
+    "damagesCount": 12467327
   },
   "rankings": {
     "userDamages": {
-      "value": 12452970,
+      "value": 12467327,
       "rank": 347,
       "tier": "diamond"
     },
     "weeklyUserDamages": {
-      "value": 932570,
-      "rank": 281,
+      "value": 946927,
+      "rank": 296,
       "tier": "diamond"
     },
     "userWealth": {
-      "value": 8446.157,
-      "rank": 1438,
+      "value": 8554.651,
+      "rank": 1413,
       "tier": "platinum"
     },
     "userLevel": {
@@ -261,12 +261,12 @@
     },
     "userReferrals": {
       "value": 3,
-      "rank": 185,
+      "rank": 186,
       "tier": "diamond"
     },
     "userSubscribers": {
       "value": 9,
-      "rank": 277,
+      "rank": 280,
       "tier": "gold"
     },
     "userTerrain": {
@@ -286,7 +286,7 @@
     },
     "userCasesOpened": {
       "value": 1464,
-      "rank": 504,
+      "rank": 506,
       "tier": "platinum"
     },
     "userGemsPurchased": {
@@ -296,7 +296,7 @@
     },
     "userBounty": {
       "value": 1184.3557090000004,
-      "rank": 401,
+      "rank": 402,
       "tier": "diamond"
     }
   },

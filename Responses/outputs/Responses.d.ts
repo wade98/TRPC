@@ -1460,11 +1460,11 @@ export interface RoundLastHitWithWeapon {
   _id: string;
   ammo: unknown;
   damages: number;
-  equipments: Array<RoundEquipment>;
+  equipments: unknown[];
   hitAt: string;
   isCriticalHit: boolean;
   isMissed: boolean;
-  mu: unknown;
+  mu: string;
   user: string;
   weapon: RoundWeapon;
 }
@@ -1474,6 +1474,44 @@ export interface RoundSideCombatStatsWithWeapon {
   damages: number;
   hitCount: number;
   lastHits: Array<RoundLastHitWithWeapon>;
+  points: number;
+}
+
+export interface EquipmentSkillsEvasive {
+  armor?: number;
+  dodge?: number;
+  precision?: number;
+}
+
+export interface RoundEquipmentEvasive {
+  _id: string;
+  code: string;
+  lastAcquisitionAt: string;
+  maxState: number;
+  quantity: number;
+  skills: EquipmentSkillsEvasive;
+  state: number;
+  type: string;
+}
+
+export interface RoundLastHitEvasive {
+  _id: string;
+  ammo: unknown;
+  damages: number;
+  equipments: Array<RoundEquipmentEvasive>;
+  hitAt: string;
+  isCriticalHit: boolean;
+  isMissed: boolean;
+  mu: string;
+  user: string;
+  weapon: unknown;
+}
+
+export interface RoundSideCombatStatsEvasive {
+  country: string;
+  damages: number;
+  hitCount: number;
+  lastHits: Array<RoundLastHitEvasive>;
   points: number;
 }
 
@@ -1643,7 +1681,7 @@ export interface UserSkills {
   hunger: UserSkillComputedBar;
   lootChance: UserSkillComputedCompany;
   management: UserSkillComputedCompany;
-  precision: UserSkillComputedStandard;
+  precision: UserSkillComputedCompany;
   production: UserSkillComputedBar;
 }
 
@@ -1912,7 +1950,7 @@ export type RoundGetByIdResponse = {
   attacker: RoundSideCombatStatsWithWeapon;
   battle: string;
   createdAt: string;
-  defender: RoundSideCombatStatsWithWeapon;
+  defender: RoundSideCombatStatsEvasive;
   isActive: boolean;
   live: RoundLiveState;
   number: number;
@@ -1921,7 +1959,7 @@ export type RoundGetByIdResponse = {
 
 export type RoundGetLastHitsResponse = {
   attacker: Array<RoundLastHitWithWeapon>;
-  defender: Array<RoundLastHitWithWeapon>;
+  defender: Array<RoundLastHitEvasive>;
 };
 
 export type SearchSearchAnythingResponse = {
@@ -1979,7 +2017,7 @@ export type UserGetUserLiteResponse = {
 
 export type UserGetUsersByCountryResponse = {
   items: Array<UsersByCountryItem>;
-  nextCursor: unknown;
+  nextCursor: string;
 };
 
 export type WorkerGetTotalWorkersCountResponse = number;
