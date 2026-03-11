@@ -1,0 +1,35 @@
+{
+  "_id": "6897e4fcf3c7e02ba29d0c3d",
+  "user": "6829380107c3bd8a261d82d9",
+  "region": "6813b70b9403bc4170a5daa7",
+  "itemCode": "iron",
+  "name": "31 minutos",
+  "concreteInvested": 200,
+  "production": 0.7299999999997011,
+  "activeUpgradeLevels": {
+    "storage": 3,
+    "automatedEngine": 5,
+    "breakRoom": 1
+  },
+  "workers": [],
+  "createdAt": "2025-08-10T00:17:00.304Z",
+  "updatedAt": "2026-03-11T13:03:59.712Z",
+  "__v": 0,
+  "estimatedValue": 891.9766998914522,
+  "movedUpAt": "2026-03-11T13:03:59.712Z",
+  "isFull": false,
+  "dates": {
+    "lastHiresAt": [
+      "2025-10-18T17:31:59.042Z",
+      "2025-10-22T00:33:03.320Z",
+      "2025-10-26T14:21:39.616Z",
+      "2025-10-31T02:36:22.946Z",
+      "2025-10-31T02:41:45.292Z",
+      "2025-11-03T18:15:13.416Z",
+      "2025-11-04T11:23:50.589Z",
+      "2026-01-02T18:52:31.605Z",
+      "2026-01-05T10:27:46.711Z"
+    ]
+  },
+  "workerCount": 0
+}

@@ -1,0 +1,82 @@
+{
+  "taxes": {
+    "income": 1,
+    "market": 1,
+    "selfWork": 0.01
+  },
+  "unrest": {
+    "barMax": 1438,
+    "bar": 0,
+    "lastContributionAt": "2026-02-12T20:09:08.494Z"
+  },
+  "_id": "696a81da63e2489f47e5a28e",
+  "name": "Mauritius",
+  "code": "mu",
+  "development": 14.383285406285182,
+  "money": 100,
+  "orgs": [],
+  "allies": [
+    "6873d0ea1758b40e712b5f59",
+    "6873d0ea1758b40e712b5f1c"
+  ],
+  "warsWith": [
+    "6813b6d446e731854c7ac79a",
+    "683ddd2c24b5a2e114af15d7",
+    "6873d0ea1758b40e712b5f3a"
+  ],
+  "scheme": "pink",
+  "mapAccent": "dark",
+  "createdAt": "2026-01-16T18:22:18.353Z",
+  "updatedAt": "2026-03-11T13:00:06.546Z",
+  "__v": 8,
+  "rankings": {
+    "countryRegionDiff": {
+      "value": -1,
+      "rank": 59,
+      "tier": "gold"
+    },
+    "countryDamages": {
+      "value": 6798880,
+      "rank": 147,
+      "tier": "bronze"
+    },
+    "weeklyCountryDamages": {
+      "value": 1339730,
+      "rank": 67,
+      "tier": "gold"
+    },
+    "weeklyCountryDamagesPerCitizen": {
+      "value": 103056.15384615384,
+      "rank": 37,
+      "tier": "silver"
+    },
+    "countryDevelopment": {
+      "value": 0,
+      "rank": 93,
+      "tier": "silver"
+    },
+    "countryActivePopulation": {
+      "value": 13,
+      "rank": 65,
+      "tier": "gold"
+    },
+    "countryWealth": {
+      "value": 183.37644999999907,
+      "rank": 168,
+      "tier": "bronze"
+    },
+    "countryBounty": {
+      "value": 714.0474780000001,
+      "rank": 147,
+      "tier": "bronze"
+    },
+    "countryProductionBonus": {
+      "value": 0,
+      "rank": 66,
+      "tier": "gold"
+    }
+  },
+  "discordUrl": "https://discord.gg/Gj7KF8XPWe",
+  "specializedItem": "livestock",
+  "rulingParty": "698d53fe28209da534904a19"
+}

@@ -1,0 +1,42 @@
+{
+  "defender": {
+    "region": "6813b7069403bc4170a5d7da",
+    "country": "6813b6d446e731854c7ac7a4",
+    "wonRoundsCount": 0,
+    "countryOrders": [],
+    "muOrders": [],
+    "damages": 0,
+    "hitCount": 65
+  },
+  "attacker": {
+    "region": "6813b7069403bc4170a5d831",
+    "country": "6813b6d446e731854c7ac7a0",
+    "wonRoundsCount": 0,
+    "countryOrders": [
+      "6813b6d446e731854c7ac7a0"
+    ],
+    "muOrders": [
+      "69a420a143600f560ccb9570"
+    ],
+    "damages": 0,
+    "hitCount": 329,
+    "moneyPer1kDamages": 0.1,
+    "moneyPool": 0
+  },
+  "stats": {
+    "hitCount": 0
+  },
+  "_id": "69b134e24b0d180f6743b0f5",
+  "war": "69b12cf519f98f6ceb3d2501",
+  "type": "war",
+  "rounds": [
+    "69b134e24b0d180f6743b0f7"
+  ],
+  "roundsHistory": [],
+  "isActive": true,
+  "roundsToWin": 2,
+  "createdAt": "2026-03-11T09:24:50.200Z",
+  "updatedAt": "2026-03-11T13:03:57.684Z",
+  "__v": 1,
+  "currentRound": "69b134e24b0d180f6743b0f7"
+}
