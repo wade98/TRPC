@@ -235,6 +235,10 @@ function isPlainObject(value: unknown): value is Record<string, JsonValue> {
 	return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 
+function isNullish(value: JsonValue | undefined): value is null | undefined {
+	return value === null || value === undefined;
+}
+
 function inferPropertyType(
 	key: string,
 	values: JsonValue[],
@@ -280,14 +284,20 @@ function inferMergedObjectType(
 	const properties: InterfaceProperty[] = keys.map((key) => {
 		const values: JsonValue[] = [];
 		let seenIn = 0;
+		let hasNullish = false;
 		for (const obj of objects) {
 			if (Object.hasOwn(obj, key)) {
 				seenIn += 1;
-				values.push(obj[key]);
+				const value = obj[key];
+				if (isNullish(value)) {
+					hasNullish = true;
+				} else {
+					values.push(value);
+				}
 			}
 		}
 
-		const optional = seenIn < objects.length;
+		const optional = key === "nextCursor" || seenIn < objects.length || hasNullish;
 		const propType = inferPropertyType(key, values, level + 1, ctx, "nested");
 		return { name: key, optional, type: propType };
 	});
@@ -305,13 +315,17 @@ function inferMany(
 		return "unknown";
 	}
 
-	if (values.some((value) => value === null)) {
+	const nonNullishValues = values.filter((value) => !isNullish(value));
+	if (nonNullishValues.length === 0) {
 		return "unknown";
 	}
 
-	const objectValues = values.filter((value) => isPlainObject(value)) as Record<string, JsonValue>[];
-	const arrayValues = values.filter((value) => Array.isArray(value)) as JsonValue[][];
-	const primitiveValues = values.filter(
+	const objectValues = nonNullishValues.filter((value) => isPlainObject(value)) as Record<
+		string,
+		JsonValue
+	>[];
+	const arrayValues = nonNullishValues.filter((value) => Array.isArray(value)) as JsonValue[][];
+	const primitiveValues = nonNullishValues.filter(
 		(value) => value !== null && !Array.isArray(value) && typeof value !== "object"
 	);
 
@@ -391,11 +405,16 @@ function inferObjectType(
 	}
 
 	const properties: InterfaceProperty[] = keys.map((key) => {
+		const value = obj[key];
 		const propType =
 			key === "nextCursor"
 				? "string"
-				: inferType(obj[key], level + 1, ctx, "nested");
-		return { name: key, optional: false, type: propType };
+				: inferType(value, level + 1, ctx, "nested");
+		return {
+			name: key,
+			optional: key === "nextCursor" || isNullish(value),
+			type: propType
+		};
 	});
 
 	return finalizeObjectType(properties, level, mode, ctx);
