@@ -2,6 +2,18 @@ import { allOperations } from "../config";
 import type { EndpointRunner } from "../runner";
 import type { CollectedIds, OperationKey } from "../types";
 
+const TRANSACTION_TYPES = [
+  "applicationFee",
+  "trading",
+  "itemMarket",
+  "wage",
+  "donation",
+  "articleTip",
+  "openCase",
+  "craftItem",
+  "dismantleItem",
+] as const;
+
 export async function runFallbackWorkflow(
   runner: EndpointRunner,
   ids: CollectedIds
@@ -138,10 +150,84 @@ export async function runFallbackWorkflow(
   };
 
   for (const op of allOperations) {
+    if (op === "transaction.getPaginatedTransactions") {
+      await runner.loadOrFetch(
+        "transaction.getPaginatedTransactions",
+        async () => {
+          const pages = await Promise.all([
+            runner.client.transaction.getPaginatedTransactions({ limit: runner.sampleSize }),
+            ...TRANSACTION_TYPES.map((transactionType) =>
+              runner.client.transaction.getPaginatedTransactions({
+                limit: runner.sampleSize,
+                transactionType,
+              })
+            ),
+          ]);
+
+          return mergeTransactionPages(pages);
+        },
+        true
+      );
+      continue;
+    }
+
     const input = getInputForOperation(op);
     if (!input) {
       continue;
     }
     await runner.loadOrFetchByOperation(op, input);
   }
+}
+
+function mergeTransactionPages(
+  pages: Array<{ items?: unknown[]; nextCursor?: string } | undefined>
+): { items: unknown[]; nextCursor: null } {
+  const seen = new Set<string>();
+  const items: unknown[] = [];
+
+  for (const page of pages) {
+    if (!page || !Array.isArray(page.items)) {
+      continue;
+    }
+
+    for (const item of page.items) {
+      const key = toTransactionItemKey(item);
+      if (key && seen.has(key)) {
+        continue;
+      }
+      if (key) {
+        seen.add(key);
+      }
+      items.push(item);
+    }
+  }
+
+  return { items, nextCursor: null };
+}
+
+function toTransactionItemKey(item: unknown): string | undefined {
+  if (!item || typeof item !== "object" || Array.isArray(item)) {
+    return undefined;
+  }
+
+  const record = item as Record<string, unknown>;
+  const id = record._id;
+  if (typeof id === "string" && id.length > 0) {
+    return id;
+  }
+
+  const buyerId = record.buyerId;
+  const sellerId = record.sellerId;
+  const itemCode = record.itemCode;
+  const createdAt = record.createdAt;
+  const transactionType = record.transactionType;
+  const parts = [buyerId, sellerId, itemCode, createdAt, transactionType].filter(
+    (value): value is string => typeof value === "string" && value.length > 0
+  );
+
+  if (parts.length === 0) {
+    return undefined;
+  }
+
+  return parts.join("|");
 }

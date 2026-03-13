@@ -93,6 +93,14 @@ export interface RoundSideCombatStats {
   points: number;
 }
 
+export interface RoundSideCombatStatsOptionalHitCount {
+  country: string;
+  damages: number;
+  hitCount?: number;
+  lastHits: Array<RoundLastHit>;
+  points: number;
+}
+
 export interface RoundLiveState {
   actualTickPoints: number;
   nextTickAt: string;
@@ -105,7 +113,7 @@ export interface BattleCurrentRound {
   attacker: RoundSideCombatStats;
   battle: string;
   createdAt: string;
-  defender: RoundSideCombatStats;
+  defender: RoundSideCombatStatsOptionalHitCount;
   isActive: boolean;
   live: RoundLiveState;
   number: number;
@@ -118,6 +126,7 @@ export interface BattleDefenderSummary {
   damages: number;
   hitCount: number;
   moneyPer1kDamages?: number;
+  moneyPool?: number;
   muOrders: Array<string>;
   region: string;
   wonRoundsCount: number;
@@ -270,6 +279,15 @@ export interface CountryRankings {
   weeklyCountryDamagesPerCitizen: RankingValueTier;
 }
 
+export interface CountryStrategicResourcesGoldOnly {
+  gold: Array<string>;
+}
+
+export interface CountryStrategicResourceConfigGoldOnly {
+  bonuses: CountryResourceBonuses;
+  resources: CountryStrategicResourcesGoldOnly;
+}
+
 export interface CountryUnrest {
   bar: number;
   barMax: number;
@@ -277,6 +295,7 @@ export interface CountryUnrest {
 }
 
 export interface EventData {
+  amount?: number;
   attackerCountry?: string;
   attackerRegion?: string;
   battle?: string;
@@ -284,9 +303,8 @@ export interface EventData {
   countries?: Array<string>;
   defenderCountry?: string;
   defenderRegion?: string;
-  durationDays?: number;
-  itemCode?: string;
-  region?: string;
+  money?: number;
+  regions?: Array<string>;
   type: string;
   war?: string;
   wars?: Array<string>;
@@ -1225,8 +1243,8 @@ export interface GameConfigWorker {
 }
 
 export interface MuActiveUpgradeLevels {
-  dormitories: number;
-  headquarters: number;
+  dormitories?: number;
+  headquarters?: number;
 }
 
 export interface MuRankings {
@@ -1242,11 +1260,6 @@ export interface MuRoles {
   managers: Array<string>;
 }
 
-export interface MuActiveUpgradeLevelsOptional {
-  dormitories: number;
-  headquarters?: number;
-}
-
 export interface MuRankingsOptional {
   muBounty?: RankingValueTier;
   muDamages?: RankingValueTier;
@@ -1258,7 +1271,7 @@ export interface MuRankingsOptional {
 export interface MuListItem {
   __v: number;
   _id: string;
-  activeUpgradeLevels: MuActiveUpgradeLevelsOptional;
+  activeUpgradeLevels: MuActiveUpgradeLevels;
   avatarUrl?: string;
   createdAt: string;
   members: Array<string>;
@@ -1308,7 +1321,7 @@ export interface RegionStats {
   investedMoney: number;
 }
 
-export interface RegionUpgradeBase {
+export interface RegionUpgradeConstructionHistory {
   constructionEndedAt: string;
   constructionPoints: number;
   constructionStartedAt: string;
@@ -1320,35 +1333,35 @@ export interface RegionUpgradeBase {
   statusChangedAt?: string;
 }
 
-export interface RegionUpgradeConstructionHistory {
+export interface RegionUpgradeBunker {
   construction: number;
   constructionAt: string;
   user: string;
 }
 
-export interface RegionUpgradeBunker {
+export interface RegionUpgrades {
   constructionEndedAt?: string;
   constructionPoints: number;
   constructionStartedAt: string;
   investedMoney: number;
   isUnderConstruction?: boolean;
-  lastConstructions: Array<RegionUpgradeConstructionHistory>;
+  lastConstructions: Array<RegionUpgradeBunker>;
   level: number;
   status?: string;
   statusChangedAt?: string;
 }
 
-export interface RegionUpgrades {
-  base?: RegionUpgradeBase;
-  bunker?: RegionUpgradeBunker;
-}
-
 export interface RegionUpgradesV2 {
-  activeConstructionCount?: number;
-  upgrades: RegionUpgrades;
+  base?: RegionUpgradeConstructionHistory;
+  bunker?: RegionUpgrades;
 }
 
 export interface RegionByIdItem {
+  activeConstructionCount?: number;
+  upgrades: RegionUpgradesV2;
+}
+
+export interface BattleSideSummaryRequiredRegion {
   __v: number;
   _id: string;
   activeBattle?: string;
@@ -1377,19 +1390,7 @@ export interface RegionByIdItem {
   resistanceMax: number;
   stats: RegionStats;
   strategicResource?: string;
-  upgradesV2: RegionUpgradesV2;
-}
-
-export interface BattleSideSummaryRequiredRegion {
-  country: string;
-  countryOrders: Array<string>;
-  damages: number;
-  hitCount: number;
-  moneyPer1kDamages?: number;
-  moneyPool?: number;
-  muOrders: Array<string>;
-  region: string;
-  wonRoundsCount: number;
+  upgradesV2: RegionByIdItem;
 }
 
 export interface RegionActiveBattle {
@@ -1398,7 +1399,7 @@ export interface RegionActiveBattle {
   attacker: BattleSideSummary;
   createdAt: string;
   currentRound: string;
-  defender: BattleSideSummaryRequiredRegion;
+  defender: BattleDefenderSummary;
   isActive: boolean;
   isBigBattle?: boolean;
   rounds: Array<string>;
@@ -1439,7 +1440,7 @@ export interface RegionsObjectItem {
   resistanceMax: number;
   stats: RegionStats;
   strategicResource?: string;
-  upgradesV2: RegionUpgradesV2;
+  upgradesV2: RegionByIdItem;
 }
 
 export interface RoundLastHitWithWeapon {
@@ -1462,6 +1463,18 @@ export interface RoundSideCombatStatsWithWeapon {
   points: number;
 }
 
+export interface TradingOrderWithMu {
+  __v: number;
+  _id: string;
+  itemCode: string;
+  mu?: string;
+  offerAt: string;
+  price: number;
+  quantity: number;
+  type: string;
+  user: string;
+}
+
 export interface TradingOrder {
   __v: number;
   _id: string;
@@ -1479,6 +1492,7 @@ export interface EquipmentSkillsMixed {
   criticalChance?: number;
   criticalDamages?: number;
   dodge?: number;
+  precision?: number;
 }
 
 export interface TransactionItem {
@@ -1498,11 +1512,13 @@ export interface TransactionListItem {
   buyerId: string;
   createdAt: string;
   item?: TransactionItem;
-  itemCode: string;
+  itemCode?: string;
   money?: number;
   offerCreatedAt?: string;
-  quantity: number;
-  sellerId: string;
+  quantity?: number;
+  sellerCountryId?: string;
+  sellerId?: string;
+  sellerMuId?: string;
   transactionType: string;
   updatedAt: string;
 }
@@ -1565,7 +1581,7 @@ export interface UserSkillComputedStandard {
   limited?: unknown;
   total: number;
   totalAfterSoftCap?: unknown;
-  value: number;
+  value?: unknown;
   weapon?: unknown;
 }
 
@@ -1603,6 +1619,16 @@ export interface UserSkillComputedCriticalChance {
   weapon: number;
 }
 
+export interface UserSkillComputedPrecision {
+  equipment: number;
+  level: number;
+  limited?: unknown;
+  total: number;
+  totalAfterSoftCap?: unknown;
+  value: number;
+  weapon?: unknown;
+}
+
 export interface UserSkillComputedBar {
   currentBarValue: number;
   equipment?: unknown;
@@ -1620,7 +1646,7 @@ export interface UserSkills {
   attack: UserSkillComputedAttack;
   companies: UserSkillComputedCompany;
   criticalChance: UserSkillComputedCriticalChance;
-  criticalDamages: UserSkillComputedStandard;
+  criticalDamages: UserSkillComputedPrecision;
   dodge: UserSkillComputedStandard;
   energy: UserSkillComputedBar;
   entrepreneurship: UserSkillComputedBar;
@@ -1628,7 +1654,7 @@ export interface UserSkills {
   hunger: UserSkillComputedBar;
   lootChance: UserSkillComputedCompany;
   management: UserSkillComputedCompany;
-  precision: UserSkillComputedCompany;
+  precision: UserSkillComputedPrecision;
   production: UserSkillComputedBar;
 }
 
@@ -1655,11 +1681,12 @@ export interface WorkersPerCompanyItem {
 export interface WorkOfferListItem {
   __v: number;
   _id: string;
+  citizenship?: string;
   company: string;
   createdAt: string;
   initialQuantity: number;
   minEnergy?: number;
-  minProduction: number;
+  minProduction?: number;
   quantity: number;
   region: string;
   text?: string;
@@ -1778,6 +1805,7 @@ export type CountryGetCountryByIdResponse = {
   rulingParty: string;
   scheme: string;
   specializedItem: string;
+  strategicResources: CountryStrategicResourceConfigGoldOnly;
   taxes: CountryTaxes;
   unrest: CountryUnrest;
   updatedAt: string;
@@ -1891,7 +1919,7 @@ export type RankingGetRankingResponse = {
   type: string;
 };
 
-export type RegionGetByIdResponse = Array<RegionByIdItem>;
+export type RegionGetByIdResponse = Array<BattleSideSummaryRequiredRegion>;
 
 export type RegionGetRegionsObjectResponse = Record<string, RegionsObjectItem>;
 
@@ -1926,7 +1954,7 @@ export type SearchSearchAnythingResponse = {
 };
 
 export type TradingOrderGetTopOrdersResponse = {
-  buyOrders: Array<TradingOrder>;
+  buyOrders: Array<TradingOrderWithMu>;
   sellOrders: Array<TradingOrder>;
 };
 
@@ -1984,6 +2012,7 @@ export type WorkerGetWorkersResponse = {
 export type WorkOfferGetByIdResponse = {
   __v: number;
   _id: string;
+  citizenship: string;
   company: string;
   createdAt: string;
   initialQuantity: number;
