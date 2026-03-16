@@ -1,3 +1,6 @@
+/Responses/outputs-backups/
+/Responses/outputs/
+
 # Logs
 logs
 *.log
