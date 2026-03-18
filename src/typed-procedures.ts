@@ -1,5 +1,6 @@
 import type { Responses } from "./api/Responses";
 import type { operations } from "./api/warera-openapi";
+import type { WarEraCustomEndpoints } from "./CustomEndpoints";
 
 export type ProcedureKey = keyof operations;
 
@@ -12,6 +13,13 @@ export type PaginationOptions = {
   maxPages?: number;
   cursorEnd?: Date;
 };
+
+export type CustomEndpointDefinition<Input = never, Output = unknown> = {
+  output: Output;
+  input?: Input;
+};
+
+export type CustomEndpointMap = Record<string, CustomEndpointDefinition<any, any>>;
 
 type BaseInputFor<K extends ProcedureKey> = operations[K] extends {
   requestBody?: infer RB;
@@ -46,6 +54,11 @@ export type ResponseFor<K extends ProcedureKey> = K extends keyof Responses
   ? Responses[K]
   : ResponseFromOpenApi<K>;
 
+export type PageResultFromOutput<TOutput> = {
+  items: ExtractItems<TOutput>[];
+  cursor: string;
+};
+
 export type PageResult<K extends ProcedureKey> = {
   items: ExtractItems<ResponseFor<K>>[];
   cursor: string;
@@ -73,50 +86,109 @@ type IsNever<T> = [T] extends [never] ? true : false;
 // Helper type to check if all properties in a type are optional
 type AllPropertiesOptional<T> = { [K in keyof T]-?: T[K] } extends T ? true : false;
 
-// Helper type to determine if input should be optional
-// Input is optional if: no input type, empty record, or all properties are optional
-type HasRequiredInput<K extends ProcedureKey> = IsNever<
-  BaseInputFor<K>
-> extends true
+type EndpointDefinition<RawInput, Output> = {
+  input: RawInput;
+  output: Output;
+};
+
+type BuiltInEndpointDefinitions = {
+  [K in ProcedureKey]: EndpointDefinition<BaseInputFor<K>, ResponseFor<K>>;
+};
+
+type NormalizeCustomEndpointMap<TCustom extends CustomEndpointMap> = {
+  [K in keyof TCustom & string]: TCustom[K] extends {
+    output: infer Output;
+    input: infer Input;
+  }
+    ? EndpointDefinition<Input, Output>
+    : TCustom[K] extends { output: infer Output }
+    ? EndpointDefinition<never, Output>
+    : never;
+};
+
+type IsPaginatedInput<RawInput> = RawInput extends { cursor?: any } ? true : false;
+
+type InputForDefinition<RawInput> = IsPaginatedInput<RawInput> extends true
+  ? RawInput & Partial<PaginationOptions>
+  : RawInput;
+
+type HasRequiredInputForDefinition<RawInput> = IsNever<RawInput> extends true
   ? false
-  : AllPropertiesOptional<BaseInputFor<K>> extends true
+  : AllPropertiesOptional<RawInput> extends true
   ? false
   : true;
 
-type ProcedureFunction<K extends ProcedureKey> = HasRequiredInput<K> extends true
-  ? IsPaginatedResponse<K> extends true
+type ProcedureFunctionFromDefinition<
+  Def extends EndpointDefinition<any, any>
+> = HasRequiredInputForDefinition<Def["input"]> extends true
+  ? IsPaginatedInput<Def["input"]> extends true
     ? {
-        (input: InputFor<K> & { autoPaginate?: false | undefined }): Promise<ResponseFor<K>>;
-        (input: InputFor<K> & { autoPaginate: true }): AsyncIterableIterator<
-          PageResult<K>
-        >;
+        (
+          input: InputForDefinition<Def["input"]> & {
+            autoPaginate?: false | undefined;
+          }
+        ): Promise<Def["output"]>;
+        (
+          input: InputForDefinition<Def["input"]> & { autoPaginate: true }
+        ): AsyncIterableIterator<PageResultFromOutput<Def["output"]>>;
       }
-    : (input: InputFor<K>) => Promise<ResponseFor<K>>
-  : IsPaginatedResponse<K> extends true
+    : (input: InputForDefinition<Def["input"]>) => Promise<Def["output"]>
+  : IsPaginatedInput<Def["input"]> extends true
   ? {
-      (input?: InputFor<K> & { autoPaginate?: false | undefined }): Promise<ResponseFor<K>>;
-      (input?: InputFor<K> & { autoPaginate: true }): AsyncIterableIterator<
-        PageResult<K>
-      >;
+      (
+        input?: InputForDefinition<Def["input"]> & {
+          autoPaginate?: false | undefined;
+        }
+      ): Promise<Def["output"]>;
+      (
+        input?: InputForDefinition<Def["input"]> & { autoPaginate: true }
+      ): AsyncIterableIterator<PageResultFromOutput<Def["output"]>>;
     }
-  : (input?: InputFor<K>) => Promise<ResponseFor<K>>;
+  : (input?: InputForDefinition<Def["input"]>) => Promise<Def["output"]>;
 
-type BuildPath<Parts extends string[], K extends ProcedureKey> = Parts extends [
+type BuildPath<
+  Parts extends string[],
+  K extends string,
+  Definitions extends Record<string, EndpointDefinition<any, any>>
+> = Parts extends [
   infer H extends string,
   ...infer R extends string[]
 ]
   ? R["length"] extends 0
-    ? { [P in H]: ProcedureFunction<K> }
-    : { [P in H]: BuildPath<R, K> }
+    ? { [P in H]: ProcedureFunctionFromDefinition<Definitions[K]> }
+    : { [P in H]: BuildPath<R, K, Definitions> }
   : never;
 
-type TreeFromKeys<Keys extends string> = UnionToIntersection<
-  Keys extends ProcedureKey
-    ? BuildPath<Split<Extract<Keys, string>, ".">, Keys>
+type TreeFromDefinitions<
+  Definitions extends Record<string, EndpointDefinition<any, any>>,
+  Keys extends keyof Definitions & string = keyof Definitions & string
+> = UnionToIntersection<
+  Keys extends string
+    ? BuildPath<Split<Extract<Keys, string>, ".">, Keys, Definitions>
     : never
 >;
 
-export type APIClient = MergeDeep<TreeFromKeys<Extract<ProcedureKey, string>>>;
+type PackagedCustomEndpointDefinitions = NormalizeCustomEndpointMap<WarEraCustomEndpoints>;
+
+type DefaultEndpointDefinitions =
+  BuiltInEndpointDefinitions & PackagedCustomEndpointDefinitions;
+
+type DefaultClientTree = MergeDeep<TreeFromDefinitions<DefaultEndpointDefinitions>>;
+
+export type APIClientWithCustomEndpoints<TCustom extends CustomEndpointMap> =
+  MergeDeep<
+    TreeFromDefinitions<
+      DefaultEndpointDefinitions & NormalizeCustomEndpointMap<TCustom>
+    >
+  > & {
+    _ce: <TAdditional extends CustomEndpointMap>() => APIClientWithCustomEndpoints<
+      TCustom & TAdditional
+    >;
+  };
+
+export type APIClient = DefaultClientTree & {
+  _ce: <TCustom extends CustomEndpointMap>() => APIClientWithCustomEndpoints<TCustom>;
+};
 
 export function procedure<K extends ProcedureKey>(key: K): TrpcProcedure<K> {
   return { key };

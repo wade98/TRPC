@@ -1,5 +1,6 @@
 export type * from './api/Responses';
 export type { components, operations, paths } from "./api/warera-openapi";
+export type * from "./CustomEndpoints";
 export {
     createAPIClient,
     /**
@@ -14,5 +15,5 @@ export type {
      */
     TrpcLikeClientOptions
 } from "./trpc-client";
-export type { APIClient, InputFor, PageResult, PaginationOptions, ProcedureKey, ResponseFor } from "./typed-procedures";
+export type * from "./typed-procedures";
 
