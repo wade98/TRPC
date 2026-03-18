@@ -288,6 +288,10 @@ export function createAPIClient(options?: TrpcLikeClientOptions & {rateLimit?: n
     new Proxy(() => {}, {
       get(_t, prop) {
         if (typeof prop !== "string") return undefined;
+        if (prop === "_ce" && parts.length === 0) {
+          // Runtime noop: custom endpoint typing is compile-time only.
+          return () => makeProxy([]);
+        }
         return makeProxy([...parts, prop]);
       },
       apply(_t, _thisArg, argArray) {
