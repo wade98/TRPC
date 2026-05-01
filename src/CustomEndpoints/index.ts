@@ -2,15 +2,88 @@ export type {
 	PartyCustomEndpoints,
 	PartyEthics,
 	PartyGetByIdInput,
-	PartyGetByIdResponse
+	PartyGetByIdResponse,
+	PartyGetManyPaginatedInput,
+	PartyGetManyPaginatedResponse
 } from "./Party";
 
 export type {
 	CompanyCustomEndpoints,
-	CompanyGetRecommendedRegionIdsByItemCodeInput, RecommendedRegion, RecommendedRegions
+	CompanyGetProductionBonusInput,
+	CompanyGetRecommendedRegionIdsByItemCodeInput,
+	CompanyProductionBonusResponse,
+	RecommendedRegion,
+	RecommendedRegions
 } from "./Company";
 
-import type { CompanyCustomEndpoints } from "./Company";
-import type { PartyCustomEndpoints } from "./Party";
+export type {
+	DonationCustomEndpoints,
+	DonationGetManyPaginatedInput,
+	DonationGetManyPaginatedResponse,
+	DonationGetTotalDonationsInput,
+	DonationGetTotalDonationsResponse,
+	DonationListItem
+} from "./Donation";
 
-export type WarEraCustomEndpoints = PartyCustomEndpoints & CompanyCustomEndpoints;
+export type {
+	ElectionCandidate,
+	ElectionCustomEndpoints,
+	ElectionGetElectionsInput,
+	ElectionGetElectionsResponse,
+	ElectionListItem
+} from "./Election";
+
+export type {
+	GameStatCustomEndpoints,
+	GameStatGetEquipmentAvgByCodeInput
+} from "./GameStat";
+
+export type {
+	MuMemberCustomEndpoints,
+	MuMemberGetByMuInput,
+	MuMemberListItem
+} from "./MuMember";
+
+export type {
+	PublicTradingOrder,
+	TradingOrderCustomEndpoints,
+	TradingOrderGetPublicOrdersByOwnerInput,
+	TradingOrderGetPublicOrdersByOwnerResponse
+} from "./TradingOrder";
+
+export type {
+	WorkCustomEndpoints,
+	WorkGetStatsByCompanyInput,
+	WorkGetStatsByUserIdInput,
+	WorkGetStatsByWorkerAndCompanyInput,
+	WorkStatsItem
+} from "./Work";
+
+export type {
+	WorkOfferCustomEndpoints,
+	WorkOfferGetWageStatsInput,
+	WorkOfferGetWageStatsResponse,
+	WorkOfferWageRange,
+	WorkOfferWageStatsOffer
+} from "./WorkOffer";
+
+import type { CompanyCustomEndpoints } from "./Company";
+import type { DonationCustomEndpoints } from "./Donation";
+import type { ElectionCustomEndpoints } from "./Election";
+import type { GameStatCustomEndpoints } from "./GameStat";
+import type { MuMemberCustomEndpoints } from "./MuMember";
+import type { PartyCustomEndpoints } from "./Party";
+import type { TradingOrderCustomEndpoints } from "./TradingOrder";
+import type { WorkCustomEndpoints } from "./Work";
+import type { WorkOfferCustomEndpoints } from "./WorkOffer";
+
+export type WarEraCustomEndpoints =
+	PartyCustomEndpoints
+	& CompanyCustomEndpoints
+	& DonationCustomEndpoints
+	& ElectionCustomEndpoints
+	& GameStatCustomEndpoints
+	& MuMemberCustomEndpoints
+	& TradingOrderCustomEndpoints
+	& WorkCustomEndpoints
+	& WorkOfferCustomEndpoints;

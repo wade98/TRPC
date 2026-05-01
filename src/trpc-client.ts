@@ -10,6 +10,7 @@ export interface TrpcLikeClientOptions {
   maxBatchSize?: number;
   batchIntervalMs?: number;
   logBatches?: boolean | ((info: BatchLogInfo) => void);
+  retry?: boolean | RetryOptions;
 }
 
 type BatchLogInfo = {
@@ -21,8 +22,59 @@ type BatchLogInfo = {
   body?: string;
 };
 
+export type RetryOptions = {
+  /**
+   * Number of retries after the initial request fails. Defaults to 3.
+   */
+  maxRetries?: number;
+  /**
+   * Initial retry delay in milliseconds. Defaults to 250ms.
+   */
+  initialDelayMs?: number;
+  /**
+   * Maximum retry delay in milliseconds. Defaults to 5000ms.
+   */
+  maxDelayMs?: number;
+  /**
+   * Multiplier applied to the delay after each failed attempt. Defaults to 2.
+   */
+  backoffMultiplier?: number;
+  /**
+   * Add random jitter to retry delays to avoid synchronized retries. Defaults to true.
+   */
+  jitter?: boolean;
+  /**
+   * HTTP status codes that should be retried. Defaults to common transient statuses.
+   */
+  retryableStatusCodes?: number[];
+  /**
+   * Optional hook called before each retry attempt.
+   */
+  onRetry?: (info: RetryInfo) => void;
+};
+
+export type RetryInfo = {
+  attempt: number;
+  maxRetries: number;
+  delayMs: number;
+  method: string;
+  url: string;
+  reason: string;
+  status?: number;
+  error?: unknown;
+};
+
 type UntypedClient = {
   query: (path: string, input: unknown) => Promise<unknown>;
+};
+
+const DEFAULT_RETRYABLE_STATUS_CODES = [408, 409, 425, 429, 500, 502, 503, 504];
+
+type NormalizedRetryOptions = Required<
+  Pick<RetryOptions, "maxRetries" | "initialDelayMs" | "maxDelayMs" | "backoffMultiplier" | "jitter">
+> & {
+  retryableStatusCodes: Set<number>;
+  onRetry?: (info: RetryInfo) => void;
 };
 
 /**
@@ -139,13 +191,165 @@ function createRateLimitedFetch(origFetch?: typeof fetch, rateLimit = 100): type
     })) as unknown as typeof fetch;
 }
 
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function normalizeNonNegativeInteger(value: number | undefined, fallback: number) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return fallback;
+  return Math.max(0, Math.floor(value));
+}
+
+function normalizePositiveNumber(value: number | undefined, fallback: number) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return fallback;
+  return Math.max(1, value);
+}
+
+function normalizeRetryOptions(retry: TrpcLikeClientOptions["retry"]): NormalizedRetryOptions | null {
+  if (retry === false) return null;
+
+  const options = retry === true || retry === undefined ? {} : retry;
+  const retryableStatusCodes =
+    options.retryableStatusCodes && options.retryableStatusCodes.length > 0
+      ? options.retryableStatusCodes
+      : DEFAULT_RETRYABLE_STATUS_CODES;
+
+  return {
+    maxRetries: normalizeNonNegativeInteger(options.maxRetries, 3),
+    initialDelayMs: normalizePositiveNumber(options.initialDelayMs, 250),
+    maxDelayMs: normalizePositiveNumber(options.maxDelayMs, 5000),
+    backoffMultiplier: normalizePositiveNumber(options.backoffMultiplier, 2),
+    jitter: options.jitter ?? true,
+    retryableStatusCodes: new Set(retryableStatusCodes),
+    onRetry: options.onRetry,
+  };
+}
+
+function getFetchUrl(input: RequestInfo | URL): string {
+  if (typeof input === "string" || input instanceof URL) {
+    return input.toString();
+  }
+  return input.url;
+}
+
+function getFetchMethod(input: RequestInfo | URL, init?: RequestInit): string {
+  const isRequest = typeof Request !== "undefined" && input instanceof Request;
+  return (init?.method ?? (isRequest ? input.method : "GET")).toUpperCase();
+}
+
+function getRetryDelayMs(options: NormalizedRetryOptions, attempt: number) {
+  const exponentialDelay =
+    options.initialDelayMs * Math.pow(options.backoffMultiplier, Math.max(0, attempt - 1));
+  const cappedDelay = Math.min(options.maxDelayMs, exponentialDelay);
+  if (!options.jitter) return Math.round(cappedDelay);
+
+  const jitterMultiplier = 0.5 + Math.random();
+  return Math.round(Math.min(options.maxDelayMs, cappedDelay * jitterMultiplier));
+}
+
+function getErrorReason(error: unknown): string {
+  if (error && typeof error === "object") {
+    const code = "code" in error ? String((error as { code?: unknown }).code) : "";
+    const message = "message" in error ? String((error as { message?: unknown }).message) : "";
+
+    const cause = "cause" in error ? (error as { cause?: unknown }).cause : undefined;
+    const causeCode =
+      cause && typeof cause === "object" && "code" in cause
+        ? String((cause as { code?: unknown }).code)
+        : "";
+
+    return [code, causeCode, message].filter(Boolean).join(": ") || "fetch failed";
+  }
+
+  return typeof error === "string" ? error : "fetch failed";
+}
+
+function isReplayableRequest(input: RequestInfo | URL, init?: RequestInit) {
+  if (typeof ReadableStream !== "undefined" && init?.body instanceof ReadableStream) {
+    return false;
+  }
+
+  const isRequest = typeof Request !== "undefined" && input instanceof Request;
+  if (!isRequest) return true;
+
+  if (init?.body !== undefined) return true;
+
+  return input.body === null;
+}
+
+/**
+ * Wrap fetch with retries for transient transport failures. Since tRPC batches
+ * are a single HTTP request, replaying fetch retries the whole failed batch.
+ *
+ * @internal
+ */
+export function createRetryFetch(origFetch: typeof fetch, retry?: TrpcLikeClientOptions["retry"]): typeof fetch {
+  const options = normalizeRetryOptions(retry);
+  if (!options || options.maxRetries === 0) return origFetch;
+
+  return (async (input: RequestInfo | URL, init?: RequestInit) => {
+    const canRetry = isReplayableRequest(input, init);
+    const method = getFetchMethod(input, init);
+    const url = getFetchUrl(input);
+    let attempt = 0;
+
+    while (true) {
+      try {
+        const response = await origFetch(input as any, init as any);
+
+        if (
+          canRetry &&
+          attempt < options.maxRetries &&
+          options.retryableStatusCodes.has(response.status)
+        ) {
+          const nextAttempt = attempt + 1;
+          const delayMs = getRetryDelayMs(options, nextAttempt);
+          await response.body?.cancel().catch(() => undefined);
+          options.onRetry?.({
+            attempt: nextAttempt,
+            maxRetries: options.maxRetries,
+            delayMs,
+            method,
+            url,
+            reason: `HTTP ${response.status}`,
+            status: response.status,
+          });
+          await sleep(delayMs);
+          attempt = nextAttempt;
+          continue;
+        }
+
+        return response;
+      } catch (error) {
+        if (!canRetry || attempt >= options.maxRetries) {
+          throw error;
+        }
+
+        const nextAttempt = attempt + 1;
+        const delayMs = getRetryDelayMs(options, nextAttempt);
+        options.onRetry?.({
+          attempt: nextAttempt,
+          maxRetries: options.maxRetries,
+          delayMs,
+          method,
+          url,
+          reason: getErrorReason(error),
+          error,
+        });
+        await sleep(delayMs);
+        attempt = nextAttempt;
+      }
+    }
+  }) as unknown as typeof fetch;
+}
+
 function createPostQueryFetch(origFetch?: typeof fetch): typeof fetch {
   const f: typeof fetch = origFetch ?? (globalThis as any).fetch;
 
   return ((input: RequestInfo | URL, init?: RequestInit) => {
     const isRequest =
       typeof Request !== "undefined" && input instanceof Request;
-    const method = (init?.method ?? (isRequest ? input.method : "GET")).toUpperCase();
+    const method = getFetchMethod(input, init);
 
     if (method !== "GET") {
       return f(input as any, init as any);
@@ -266,13 +470,14 @@ export function createAPIClient(options?: TrpcLikeClientOptions & {rateLimit?: n
   const loggedFetch = createBatchLoggingFetch(baseFetch, options?.logBatches);
   const postQueryFetch = createPostQueryFetch(loggedFetch);
   const rateLimitedFetch = createRateLimitedFetch(postQueryFetch, appliedRateLimit);
+  const retryFetch = createRetryFetch(rateLimitedFetch, options?.retry);
   
   const client = createTRPCUntypedClient({
     links: [
       ...(options?.logger === true ? [loggerLink()] : []),
       httpBatchLink({
         url: options?.url ?? "https://api2.warera.io/trpc",
-        fetch: rateLimitedFetch,
+        fetch: retryFetch,
         maxURLLength: 16000,
         headers() {
           return {

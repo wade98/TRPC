@@ -1,6 +1,6 @@
 {
 	"name": "@wareraprojects/api",
-	"version": "0.2.2",
+	"version": "0.3.0-beta.0",
 	"description": "tRPC communication layer for WarEra (frontend and backend compatible)",
 	"repository": {
 		"url": "https://github.com/WarEraProjects/trpc"
@@ -33,6 +33,7 @@
 		"convertToTypes": "tsx -r dotenv/config Responses/ConvertToTypes.ts",
 		"convertToTypes:ignoreNaming": "tsx -r dotenv/config Responses/ConvertToTypes.ts --ignore-type-naming",
 		"test": "tsx -r dotenv/config tests/test-api.ts",
+		"test:retry": "tsx tests/test-retry-fetch.ts",
 		"allEndpoints": "tsx -r dotenv/config Responses/AllEndpoints.ts",
 		"allEndpoints:fresh": "tsx -r dotenv/config Responses/AllEndpoints.ts --refresh-outputs"
 	},

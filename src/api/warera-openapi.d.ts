@@ -524,6 +524,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/user.getUserById": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Get user by ID
+         * @description Retrieves public information about a user by their ID
+         */
+        post: operations["user.getUserById"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/article.getArticleById": {
         parameters: {
             query?: never;
@@ -704,6 +724,86 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/battleOrder.getByBattle": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Get battle orders
+         * @description Retrieves active battle orders for a specific battle and side
+         */
+        post: operations["battleOrder.getByBattle"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/battleLootSummary.getByBattleAndUser": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Get battle loot summary by battle and user
+         * @description Retrieves the loot summary for a specific user in a specific battle, including case counts, hits, total damage and pool loot.
+         */
+        post: operations["battleLootSummary.getByBattleAndUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/inventory.fetchCurrentEquipment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Get equipped items
+         * @description Retrieves the currently equipped items for a user
+         */
+        post: operations["inventory.fetchCurrentEquipment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/mercenaryContractAuction.getPaginatedAuctions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Get active mercenary contract auctions with optional filters
+         * @description Retrieves a list of active mercenary contract auctions, with optional filtering by country, battle, and status
+         */
+        post: operations["mercenaryContractAuction.getPaginatedAuctions"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -752,8 +852,6 @@ export interface operations {
                 "application/json": {
                     /** @description Filter companies by user ID */
                     userId?: string;
-                    /** @description Filter companies by organization ID */
-                    orgId?: string;
                     /**
                      * @description Number of companies per page (1-100)
                      * @default 10
@@ -1095,7 +1193,7 @@ export interface operations {
                      * @description Which side of the battle to rank
                      * @enum {string}
                      */
-                    side: "attacker" | "defender";
+                    side: "attacker" | "defender" | "merged";
                 };
             };
         };
@@ -1271,7 +1369,7 @@ export interface operations {
                      * @description The type of ranking to retrieve
                      * @enum {string}
                      */
-                    rankingType: "weeklyCountryDamages" | "weeklyCountryDamagesPerCitizen" | "countryRegionDiff" | "countryDevelopment" | "countryActivePopulation" | "countryDamages" | "countryWealth" | "countryProductionBonus" | "countryBounty" | "weeklyUserDamages" | "userDamages" | "userWealth" | "userLevel" | "userReferrals" | "userSubscribers" | "userTerrain" | "userPremiumMonths" | "userPremiumGifts" | "userCasesOpened" | "userGemsPurchased" | "userBounty" | "muWeeklyDamages" | "muDamages" | "muTerrain" | "muWealth" | "muBounty";
+                    rankingType: "weeklyCountryDamages" | "weeklyCountryDamagesPerCitizen" | "countryRegionDiff" | "countryDevelopment" | "countryActivePopulation" | "countryDamages" | "countryWealth" | "countryProductionBonus" | "countryBounty" | "weeklyUserDamages" | "userDamages" | "userWealth" | "userLevel" | "userReferrals" | "userSubscribers" | "userTerrain" | "userPremiumMonths" | "userPremiumGifts" | "userCasesOpened" | "userGemsPurchased" | "userBounty" | "muWeeklyDamages" | "muDamages" | "muTerrain" | "muWealth" | "muBounty" | "muReputation";
                 };
             };
         };
@@ -1400,6 +1498,29 @@ export interface operations {
             };
         };
     };
+    "user.getUserById": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    userId: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     "article.getArticleById": {
         parameters: {
             query?: never;
@@ -1475,6 +1596,8 @@ export interface operations {
                     categories?: string[];
                     /** @description The languages to get articles for */
                     languages?: string[];
+                    /** @description Only show articles with a positive score */
+                    positiveScoreOnly?: boolean;
                 };
             };
         };
@@ -1525,7 +1648,6 @@ export interface operations {
                     cursor?: string;
                     memberId?: string;
                     userId?: string;
-                    orgId?: string;
                     search?: string;
                 };
             };
@@ -1567,7 +1689,7 @@ export interface operations {
                     /** @description The item code to get transactions for */
                     itemCode?: string;
                     /** @description The type of transactions to get */
-                    transactionType?: ("applicationFee" | "trading" | "itemMarket" | "wage" | "donation" | "articleTip" | "openCase" | "craftItem" | "dismantleItem") | ("applicationFee" | "trading" | "itemMarket" | "wage" | "donation" | "articleTip" | "openCase" | "craftItem" | "dismantleItem")[];
+                    transactionType?: ("applicationFee" | "trading" | "itemMarket" | "wage" | "donation" | "articleTip" | "openCase" | "craftItem" | "dismantleItem" | "battleLoot") | ("applicationFee" | "trading" | "itemMarket" | "wage" | "donation" | "articleTip" | "openCase" | "craftItem" | "dismantleItem" | "battleLoot")[];
                 };
             };
         };
@@ -1648,6 +1770,105 @@ export interface operations {
             content: {
                 "application/json": {
                     userId: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    "battleOrder.getByBattle": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    battleId: string;
+                    /** @enum {string} */
+                    side: "attacker" | "defender";
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    "battleLootSummary.getByBattleAndUser": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    battleId: string;
+                    userId: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    "inventory.fetchCurrentEquipment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    userId: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    "mercenaryContractAuction.getPaginatedAuctions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    countryId?: string;
+                    battleId?: string;
+                    status?: ("active" | "won" | "expiredNoBids" | "expiredBattle" | "expiredRound" | "cancelled") | "terminated";
+                    cursor?: string;
+                    limit?: number;
                 };
             };
         };

@@ -163,6 +163,63 @@ export interface BattleDetailedSide {
   wonRoundsCount: number;
 }
 
+export interface BattleLootPoolItem {
+  item: RoundWeapon;
+  pool: string;
+  rank: number;
+  round?: string;
+}
+
+export interface BattleOrderItem {
+  __v: number;
+  _id: string;
+  battle: string;
+  country?: string;
+  createdAt: string;
+  isActive: boolean;
+  mu?: string;
+  priority: string;
+  side: string;
+  sideCountry: string;
+  text: string;
+  updatedAt: string;
+  user: string;
+}
+
+export interface MercenaryContractAuctionBid {
+  bidAt: string;
+  mu: string;
+  payout: number;
+  perK: number;
+  user: string;
+}
+
+export interface MercenaryContractAuctionListItem {
+  __v: number;
+  _id: string;
+  battle: string;
+  bids: Array<MercenaryContractAuctionBid>;
+  budget: number;
+  country: string;
+  createdAt: string;
+  createdBy: string;
+  currentPayout: number;
+  currentPerK: number;
+  currentWinner?: string;
+  currentWinnerUser?: string;
+  duration: number;
+  expiresAt: string;
+  forCountry: string;
+  forCountrySide: string;
+  initialPerK: number;
+  minimumDamage: number;
+  professionalsOnly: boolean;
+  round: string;
+  roundNumber: number;
+  status: string;
+  updatedAt: string;
+}
+
 export interface LiveBattleSummary {
   attackerCountryOrders: unknown[];
   defenderCountryOrders: unknown[];
@@ -1753,6 +1810,24 @@ export type BattleGetLiveBattleDataResponse = {
   round: LiveRoundSummary;
 };
 
+export type BattleLootSummaryGetByBattleAndUserResponse = {
+  __v: number;
+  _id: string;
+  battle: string;
+  case1Count: number;
+  case2Count: number;
+  createdAt: string;
+  hits: number;
+  poolLoot: Array<BattleLootPoolItem>;
+  totalDmg: number;
+  totalMoneyFromBounty: number;
+  totalMoneyFromContract: number;
+  updatedAt: string;
+  user: string;
+};
+
+export type BattleOrderGetByBattleResponse = Array<BattleOrderItem>;
+
 export type BattleRankingGetRankingResponse = {
   rankings: Array<{
     country: string;
@@ -1890,6 +1965,33 @@ export type ItemTradingGetPricesResponse = {
   steel: number;
 };
 
+export type InventoryFetchCurrentEquipmentResponse = {
+  ammo?: string;
+  boots?: RoundEquipment;
+  chest?: RoundEquipment;
+  gloves?: RoundEquipment;
+  helmet?: RoundEquipment;
+  pants?: RoundEquipment;
+  weapon?: RoundWeapon;
+};
+
+export type ItemOfferGetByIdResponse = {
+  __v: number;
+  _id: string;
+  country: string;
+  createdAt: string;
+  item: RoundWeapon;
+  itemCode: string;
+  price: number;
+  updatedAt: string;
+  user: string;
+};
+
+export type MercenaryContractAuctionGetPaginatedAuctionsResponse = {
+  items: Array<MercenaryContractAuctionListItem>;
+  nextCursor?: string;
+};
+
 export type MuGetByIdResponse = {
   __v: number;
   _id: string;
@@ -1966,18 +2068,20 @@ export type TransactionGetPaginatedTransactionsResponse = {
 export type UpgradeGetUpgradeByTypeAndEntityResponse = {
   __v: number;
   _id: string;
+  company?: string;
   createdAt: string;
   dependantUsersCount: number;
   investedConcrete: number;
   investedMoney: number;
   investedSteel: number;
   level: number;
-  region: string;
+  mu?: string;
+  region?: string;
   status: string;
-  statusChangedAt: string;
+  statusChangedAt?: string;
   updatedAt: string;
   upgradeType: string;
-  willBeActiveAt: string;
+  willBeActiveAt?: string;
 };
 
 export type UserGetUserLiteResponse = {
@@ -1995,6 +2099,36 @@ export type UserGetUserLiteResponse = {
   skills: UserSkills;
   stats: UserStats;
   username: string;
+};
+
+export type UserGetUserByIdResponse = {
+  __v: number;
+  _id: string;
+  availableColorSchemes: unknown[];
+  avatarUrl?: string;
+  canOnboard: boolean;
+  company?: string;
+  country: string;
+  createdAt: string;
+  dates: Record<string, unknown>;
+  emailVerified: boolean;
+  equipment?: Record<string, string>;
+  equippedSkinKeys?: Record<string, string>;
+  finishedTours?: Record<string, boolean>;
+  isActive: boolean;
+  leveling: UserLeveling;
+  militaryRank: number;
+  missions?: Record<string, unknown>;
+  mu?: string;
+  muMaxLevelRewarded: number;
+  party?: string;
+  rankings: Partial<Record<string, RankingValueTier>>;
+  shouldUpdateProfile: boolean;
+  skills: Record<string, unknown>;
+  stats: Record<string, unknown>;
+  updatedAt: string;
+  username: string;
+  usernameLower: string;
 };
 
 export type UserGetUsersByCountryResponse = {
@@ -2053,6 +2187,8 @@ export interface Responses {
   "battle.getBattles": BattleGetBattlesResponse;
   "battle.getById": BattleGetByIdResponse;
   "battle.getLiveBattleData": BattleGetLiveBattleDataResponse;
+  "battleLootSummary.getByBattleAndUser": BattleLootSummaryGetByBattleAndUserResponse;
+  "battleOrder.getByBattle": BattleOrderGetByBattleResponse;
   "battleRanking.getRanking": BattleRankingGetRankingResponse;
   "company.getById": CompanyGetByIdResponse;
   "company.getCompanies": CompanyGetCompaniesResponse;
@@ -2062,7 +2198,10 @@ export interface Responses {
   "gameConfig.getDates": GameConfigGetDatesResponse;
   "gameConfig.getGameConfig": GameConfigGetGameConfigResponse;
   "government.getByCountryId": GovernmentGetByCountryIdResponse;
+  "inventory.fetchCurrentEquipment": InventoryFetchCurrentEquipmentResponse;
+  "itemOffer.getById": ItemOfferGetByIdResponse;
   "itemTrading.getPrices": ItemTradingGetPricesResponse;
+  "mercenaryContractAuction.getPaginatedAuctions": MercenaryContractAuctionGetPaginatedAuctionsResponse;
   "mu.getById": MuGetByIdResponse;
   "mu.getManyPaginated": MuGetManyPaginatedResponse;
   "ranking.getRanking": RankingGetRankingResponse;
@@ -2074,6 +2213,7 @@ export interface Responses {
   "tradingOrder.getTopOrders": TradingOrderGetTopOrdersResponse;
   "transaction.getPaginatedTransactions": TransactionGetPaginatedTransactionsResponse;
   "upgrade.getUpgradeByTypeAndEntity": UpgradeGetUpgradeByTypeAndEntityResponse;
+  "user.getUserById": UserGetUserByIdResponse;
   "user.getUserLite": UserGetUserLiteResponse;
   "user.getUsersByCountry": UserGetUsersByCountryResponse;
   "worker.getTotalWorkersCount": WorkerGetTotalWorkersCountResponse;
