@@ -22,6 +22,10 @@ export async function runFallbackWorkflow(
   const finalCompanyId = ids.companyId ?? process.env.WARERA_COMPANY_ID;
   const finalMuId = ids.muId ?? process.env.WARERA_MU_ID;
   const finalBattleId = ids.battleId ?? process.env.WARERA_BATTLE_ID;
+  const finalBattleLootBattleId =
+    process.env.WARERA_BATTLE_LOOT_BATTLE_ID ?? finalBattleId;
+  const finalBattleLootUserId =
+    process.env.WARERA_BATTLE_LOOT_USER_ID ?? ids.userId;
   const finalRoundId =
     (process.env.WARERA_ROUND_ID as string | undefined) ??
     ids.roundId ??
@@ -36,6 +40,7 @@ export async function runFallbackWorkflow(
     ids.itemCode,
     process.env.WARERA_ITEM_CODE
   );
+  const finalItemOfferId = process.env.WARERA_ITEM_OFFER_ID;
   const finalCompanyIdResolved = finalCompanyId ?? runner.resolveCompanyIdFromCache();
 
   const getInputForOperation = (
@@ -87,6 +92,11 @@ export async function runFallbackWorkflow(
         return {};
       case "tradingOrder.getTopOrders":
         return { itemCode: finalItemCode, limit: runner.sampleSize };
+      case "itemOffer.getById":
+        if (!finalItemOfferId) {
+          return undefined;
+        }
+        return { itemOfferId: finalItemOfferId };
       case "workOffer.getById":
         return {
           workOfferId: runner.requireId(
@@ -112,6 +122,7 @@ export async function runFallbackWorkflow(
       case "gameConfig.getGameConfig":
         return {};
       case "user.getUserLite":
+      case "user.getUserById":
         return { userId: ids.userId };
       case "user.getUsersByCountry":
         return { countryId: ids.countryId, limit: runner.sampleSize };
@@ -144,6 +155,28 @@ export async function runFallbackWorkflow(
           : { userId: ids.userId };
       case "worker.getTotalWorkersCount":
         return { userId: ids.userId };
+      case "battleOrder.getByBattle":
+        return {
+          battleId: runner.requireId("battleId", finalBattleId, "WARERA_BATTLE_ID"),
+          side: "attacker",
+        };
+      case "battleLootSummary.getByBattleAndUser":
+        return {
+          battleId: runner.requireId(
+            "battleLootBattleId",
+            finalBattleLootBattleId,
+            "WARERA_BATTLE_LOOT_BATTLE_ID"
+          ),
+          userId: runner.requireId(
+            "battleLootUserId",
+            finalBattleLootUserId,
+            "WARERA_BATTLE_LOOT_USER_ID"
+          ),
+        };
+      case "inventory.fetchCurrentEquipment":
+        return { userId: runner.requireId("userId", ids.userId, "WARERA_USER_ID") };
+      case "mercenaryContractAuction.getPaginatedAuctions":
+        return { limit: runner.sampleSize };
       default:
         return {};
     }

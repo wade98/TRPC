@@ -23,12 +23,29 @@ export type PartyGetByIdResponse = {
 	updatedAt: string;
 	__v: number;
 	avatarUrl?: string;
+	treasurer?: string;
 	primaryWinner?: string;
+};
+
+export type PartyGetManyPaginatedInput = {
+	countryId?: string;
+	limit?: number;
+	cursor?: string;
+	direction?: "forward" | "backward";
+};
+
+export type PartyGetManyPaginatedResponse = {
+	items: PartyGetByIdResponse[];
+	nextCursor?: string;
 };
 
 export type PartyCustomEndpoints = {
 	"party.getById": {
 		input: PartyGetByIdInput;
 		output: PartyGetByIdResponse;
+	};
+	"party.getManyPaginated": {
+		input: PartyGetManyPaginatedInput;
+		output: PartyGetManyPaginatedResponse;
 	};
 };

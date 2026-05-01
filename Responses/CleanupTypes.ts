@@ -201,6 +201,12 @@ export const interfaceNameMap: InterfaceNameMap = {
 	A181: "WorkerCompany",
 	A182: "WorkersPerCompanyItem",
 	A183: "WorkOfferListItem",
+	A184: "BattleLootPoolItem",
+	A185: "BattleOrderItem",
+	A186: "InventoryCurrentEquipment",
+	A187: "MercenaryContractAuctionList",
+	A188: "UserById",
+	A189: "ItemOffer",
 };
 
 function normalizeMappedName(value: string): string {

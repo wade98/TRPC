@@ -13,7 +13,9 @@ export type {
     /**
      * @deprecated Use APIClientOptions instead
      */
-    TrpcLikeClientOptions
+    TrpcLikeClientOptions,
+    RetryInfo,
+    RetryOptions
 } from "./trpc-client";
 export type * from "./typed-procedures";
 

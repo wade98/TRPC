@@ -1,5 +1,18 @@
 export type CompanyGetRecommendedRegionIdsByItemCodeInput = {
 	itemCode: string;
+	includeDeposit?: boolean;
+};
+
+export type CompanyGetProductionBonusInput = {
+	companyId: string;
+};
+
+export type CompanyProductionBonusResponse = {
+	strategicBonus: number;
+	depositBonus: number;
+	ethicSpecializationBonus: number;
+	ethicDepositBonus: number;
+	total: number;
 };
 
 export interface RecommendedRegion {
@@ -21,5 +34,9 @@ export type CompanyCustomEndpoints = {
 	"company.getRecommendedRegionIdsByItemCode": {
 		input: CompanyGetRecommendedRegionIdsByItemCodeInput;
 		output: RecommendedRegions;
+	};
+	"company.getProductionBonus": {
+		input: CompanyGetProductionBonusInput;
+		output: CompanyProductionBonusResponse;
 	};
 };

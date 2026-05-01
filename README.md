@@ -11,6 +11,7 @@ You get typed procedures, batching, and rate-limit safety out of the box.
 - Procedure discovery via IntelliSense (no manual endpoint hunting).
 - Automatic request batching to reduce network overhead and improve throughput.
 - Built-in rate limiting aligned to API requirements, so your app degrades gracefully under throttling.
+- Automatic retries for failed batches on dropped connections and transient HTTP failures.
 - Automatic URL length handling by splitting oversized requests and recombining results.
 - **Automatic cursor-based pagination** with type-safe async iterators. See [Auto-Pagination Guide](./docs/AUTO_PAGINATION.md).
 - Less boilerplate, fewer edge cases, faster iteration. 
