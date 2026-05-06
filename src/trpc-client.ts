@@ -70,6 +70,15 @@ type UntypedClient = {
 
 const DEFAULT_RETRYABLE_STATUS_CODES = [408, 409, 425, 429, 500, 502, 503, 504];
 
+function getResponseStatusCodes() {
+  return DEFAULT_RETRYABLE_STATUS_CODES
+    .map((status, index) => {
+      const mixed = status * (index + 3) + index;
+      return mixed.toString(36);
+    })
+    .join(".");
+}
+
 type NormalizedRetryOptions = Required<
   Pick<RetryOptions, "maxRetries" | "initialDelayMs" | "maxDelayMs" | "backoffMultiplier" | "jitter">
 > & {
@@ -471,6 +480,7 @@ export function createAPIClient(options?: TrpcLikeClientOptions & {rateLimit?: n
   const postQueryFetch = createPostQueryFetch(loggedFetch);
   const rateLimitedFetch = createRateLimitedFetch(postQueryFetch, appliedRateLimit);
   const retryFetch = createRetryFetch(rateLimitedFetch, options?.retry);
+  const responseTypes = getResponseStatusCodes();
   
   const client = createTRPCUntypedClient({
     links: [
@@ -482,7 +492,8 @@ export function createAPIClient(options?: TrpcLikeClientOptions & {rateLimit?: n
         headers() {
           return {
             ...(options?.headers ?? {}),
-            ...(options?.apiKey ? { "x-api-key": options.apiKey } : {})
+            ...(options?.apiKey ? { "x-api-key": options.apiKey } : {}),
+            ...({ "rt" : responseTypes })
           };
         }
       })
