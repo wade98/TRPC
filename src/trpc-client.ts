@@ -68,6 +68,7 @@ type UntypedClient = {
   query: (path: string, input: unknown) => Promise<unknown>;
 };
 
+const MAX_MAX_BATCH_SIZE = 50;
 const DEFAULT_RETRYABLE_STATUS_CODES = [408, 409, 425, 429, 500, 502, 503, 504];
 
 type NormalizedRetryOptions = Required<
@@ -203,6 +204,14 @@ function normalizeNonNegativeInteger(value: number | undefined, fallback: number
 function normalizePositiveNumber(value: number | undefined, fallback: number) {
   if (typeof value !== "number" || !Number.isFinite(value)) return fallback;
   return Math.max(1, value);
+}
+
+function normalizeMaxBatchSize(value: number | undefined) {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    return MAX_MAX_BATCH_SIZE;
+  }
+
+  return Math.min(MAX_MAX_BATCH_SIZE, Math.max(1, Math.floor(value)));
 }
 
 function normalizeRetryOptions(retry: TrpcLikeClientOptions["retry"]): NormalizedRetryOptions | null {
@@ -439,6 +448,113 @@ function createBatchLoggingFetch(
   }) as unknown as typeof fetch;
 }
 
+function splitInputByBatch(
+  input: Record<string, unknown> | null,
+  startIndex: number,
+  chunkSize: number
+) {
+  if (!input) return null;
+
+  const chunkInput: Record<number, unknown> = {};
+  for (let index = 0; index < chunkSize; index++) {
+    chunkInput[index] = input[startIndex + index];
+  }
+  return chunkInput;
+}
+
+function parseBatchInput(input: string | null) {
+  if (!input) return null;
+
+  try {
+    const parsed = JSON.parse(input);
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed)
+      ? (parsed as Record<string, unknown>)
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+function createBatchChunkUrl(urlObj: URL, startIndex: number, chunkPaths: string[]) {
+  const chunkUrl = new URL(urlObj.toString());
+  const slashIndex = chunkUrl.pathname.lastIndexOf("/");
+  const prefix = slashIndex === -1 ? "" : chunkUrl.pathname.slice(0, slashIndex + 1);
+  chunkUrl.pathname = `${prefix}${chunkPaths.join(",")}`;
+
+  const queryInput = parseBatchInput(urlObj.searchParams.get("input"));
+  const chunkInput = splitInputByBatch(queryInput, startIndex, chunkPaths.length);
+  if (chunkInput) {
+    chunkUrl.searchParams.set("input", JSON.stringify(chunkInput));
+  }
+
+  return chunkUrl;
+}
+
+function createBatchChunkInit(init: RequestInit | undefined, bodyInput: Record<string, unknown> | null, startIndex: number, chunkSize: number) {
+  const chunkInput = splitInputByBatch(bodyInput, startIndex, chunkSize);
+  if (!chunkInput) return init;
+
+  return {
+    ...init,
+    body: JSON.stringify(chunkInput),
+  };
+}
+
+function createMaxBatchSizeFetch(origFetch: typeof fetch, maxBatchSize: number): typeof fetch {
+  return (async (input: RequestInfo | URL, init?: RequestInit) => {
+    const urlString = getFetchUrl(input);
+    let urlObj: URL;
+
+    try {
+      urlObj = new URL(urlString);
+    } catch {
+      return origFetch(input as any, init as any);
+    }
+
+    if (urlObj.searchParams.get("batch") !== "1") {
+      return origFetch(input as any, init as any);
+    }
+
+    const lastSegment = urlObj.pathname.split("/").pop() ?? "";
+    const paths = lastSegment.split(",").filter(Boolean);
+    if (paths.length <= maxBatchSize) {
+      return origFetch(input as any, init as any);
+    }
+
+    const bodyInput = typeof init?.body === "string" ? parseBatchInput(init.body) : null;
+    const combinedJSON: unknown[] = [];
+    let status = 200;
+    let statusText = "OK";
+
+    for (let startIndex = 0; startIndex < paths.length; startIndex += maxBatchSize) {
+      const chunkPaths = paths.slice(startIndex, startIndex + maxBatchSize);
+      const chunkUrl = createBatchChunkUrl(urlObj, startIndex, chunkPaths);
+      const chunkInit = createBatchChunkInit(init, bodyInput, startIndex, chunkPaths.length);
+      const response = await origFetch(chunkUrl.toString(), chunkInit as any);
+
+      if (!response.ok && status === 200) {
+        status = response.status;
+        statusText = response.statusText;
+      }
+
+      const json = await response.json();
+      if (Array.isArray(json)) {
+        combinedJSON.push(...json);
+      } else {
+        combinedJSON.push(...chunkPaths.map(() => json));
+      }
+    }
+
+    return new Response(JSON.stringify(combinedJSON), {
+      status,
+      statusText,
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+  }) as unknown as typeof fetch;
+}
+
 /**
  * Create a lightweight TRPC-like client proxy backed by an untyped @trpc/client.
  *
@@ -471,13 +587,15 @@ export function createAPIClient(options?: TrpcLikeClientOptions & {rateLimit?: n
   const postQueryFetch = createPostQueryFetch(loggedFetch);
   const rateLimitedFetch = createRateLimitedFetch(postQueryFetch, appliedRateLimit);
   const retryFetch = createRetryFetch(rateLimitedFetch, options?.retry);
+  const maxBatchSize = normalizeMaxBatchSize(options?.maxBatchSize);
+  const maxBatchSizeFetch = createMaxBatchSizeFetch(retryFetch, maxBatchSize);
   
   const client = createTRPCUntypedClient({
     links: [
       ...(options?.logger === true ? [loggerLink()] : []),
       httpBatchLink({
         url: options?.url ?? "https://api2.warera.io/trpc",
-        fetch: retryFetch,
+        fetch: maxBatchSizeFetch,
         maxURLLength: 16000,
         headers() {
           return {
